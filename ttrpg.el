@@ -77,7 +77,7 @@ See p.6 of Mythic Variations 2."
           (setq response (concat response " (Random Event)"))
         (if (and (not (eq (mod die-one 2) 0)) (not (eq (mod die-two 2) 0)))
             (setq response (concat response " (Extreme)")))))
-    (message response)))
+    response))
 
 (defun fate-check (question)
   "Interactive function for making a FATE CHECK for a particular QUESTION."
