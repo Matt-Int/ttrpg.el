@@ -12,6 +12,8 @@
 
 ;;; Code:
 
+;; Config and customisations:
+
 (defgroup ttrpg nil
   "Running solo-ttrpgs."
   :group 'games)
@@ -42,6 +44,8 @@ See p. 6 of Mythic Variations 2."
 These options are available to select when doing a FATE CHECK."
   (mapc #'(lambda (item) (car item)) mythic-fate-check-modifiers))
 
+;; Util functions for rolling dice:
+
 (defun roll-die (n-sides)
   "Rolls a single die with N-SIDES."
   (+ 1 (random n-sides)))
@@ -57,6 +61,7 @@ These options are available to select when doing a FATE CHECK."
   "Rolls N-DICE with N-SIDES and sums the result."
   (seq-reduce #'+ (roll-dice n-dice n-sides) 0))
 
+;; Mythic Variations 2 Fate Check:
 
 (defun chaos-roll (chaos-rank likelihood-modifier)
   "Rolls 3d10, where one die is the chaos die.
@@ -112,6 +117,9 @@ mini-buffer."
 See `fate-check' for more details"
   (interactive "sFate Check Question: \n")
   (fate-check question t))
+
+
+;; Mythic variations 2 chaos factor changes:
 
 (defun chaos-factor-increase ()
   "Increases the chaos factor by one unless it is at the maximum.
