@@ -113,5 +113,23 @@ See `fate-check' for more details"
   (interactive "sFate Check Question: \n")
   (fate-check question t))
 
+(defun chaos-factor-increase ()
+  "Increases the chaos factor by one unless it is at the maximum.
+It also resets it to the max in case it has somehow gone beyond the max."
+  (if (> mythic-chaos-factor 5)
+      (progn
+	(message "Chaos factor is already at max.")
+	(setq mythic-chaos-factor 6))
+    (setq mythic-chaos-factor (+ 1 mythic-chaos-factor))))
+
+(defun chaos-factor-decrease ()
+  "Decreases the chaos factor by one unless it is at the minimum.
+It also resets to the minimum in case it has somehow gone beyond the min."
+  (if (< mythic-chaos-factor 4)
+      (progn
+	(message "Chaos factor is already at min.")
+	(setq mythic-chaos-factor 3))
+    (setq mythic-chaos-factor (- mythic-chaos-factor 1))))
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
