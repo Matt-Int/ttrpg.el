@@ -79,11 +79,33 @@ See p.6 of Mythic Variations 2."
             (setq response (concat response " (Extreme)")))))
     response))
 
-(defun fate-check (question)
-  "Interactive function for making a FATE CHECK for a particular QUESTION."
+(defun fate-check (question &optional insert)
+  "Interactive function for making a FATE CHECK for a particular QUESTION.
+Set the optional INSERT to t to insert at point instead of echoing to the
+mini-buffer."
   (interactive "sFate Check Question: \n")
-  (message (format "Q: %s \nA: %s" question (chaos-roll
-					     mythic-chaos-factor
-					     0))))
+  (let ((likelihood (completing-read "How likely is this? "
+				     (mythic-fate-check-modifier-options)))
+	(result "")
+	(likelihood-modifier))
+    (setq likelihood-modifier (cdr (assoc likelihood
+					  mythic-fate-check-modifiers)))
+    (if (eq 3 mythic-chaos-factor)
+	(if (yes-or-no-p "Is a yes favourable?")
+	    (setq likelihood-modifier (+ 2 likelihood-modifier))
+	  (setq likelihood-modifier (- 2 likelihood-modifier)))
+      (if (eq 6 mythic-chaos-factor)
+	  (if (yes-or-no-p "Is a yes favourable?")
+	      (setq likelihood-modifier (- 2 likelihood-modifier))
+	    (setq likelihood-modifier (+ 2 likelihood-modifier)))))
+    (setq result
+	  (format "Q: %s (%s)\nA: %s"
+		  question
+		  likelihood
+		  (chaos-roll
+		   mythic-chaos-factor
+		   likelihood-modifier)))
+    (if (eq insert t) (insert result) (message result))))
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
