@@ -107,5 +107,11 @@ mini-buffer."
 		   likelihood-modifier)))
     (if (eq insert t) (insert result) (message result))))
 
+(defun fate-check-insert (question)
+  "Interactive function to insert the result of a FATE CHECK for a QUESTION.
+See `fate-check' for more details"
+  (interactive "sFate Check Question: \n")
+  (fate-check question t))
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
