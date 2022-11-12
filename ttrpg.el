@@ -22,6 +22,8 @@ See p. 6 of Mythic Variations 2."
   :group 'ttrpg
   :type 'integer)
 
+(make-variable-buffer-local 'mythic-chaos-factor)
+
 (defcustom mythic-fate-check-modifiers '(("50/50 or Unsure" .  0)
 					 ("Likely"          .  2)
 					 ("Unlikely"        . -2)
