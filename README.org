@@ -1,0 +1,4 @@
+#+title:ttrpg.el
+
+* Description
+=ttrpg.el= is a package for emacs to provide helper functions for using the Mythic GM emulator.
