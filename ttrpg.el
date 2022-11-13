@@ -292,6 +292,22 @@ See `detail-check' for more details"
   (interactive "sDetail Check Question: \n")
   (detail-check question t))
 
+;; Extra meaning results
+
+(defun mythic-description ()
+  "Return a random selection from `mythic-meaning-table-descriptions'."
+  (interactive)
+  (format "%s %s"
+	  (seq-random-elt (car mythic-meaning-table-descriptions))
+	  (seq-random-elt (cdr mythic-meaning-table-descriptions))))
+
+(defun mythic-action ()
+  "Return a random selection from `mythic-meaning-table-actions'."
+  (interactive)
+  (format "%s %s"
+	  (seq-random-elt (car mythic-meaning-table-actions))
+	  (seq-random-elt (cdr mythic-meaning-table-actions))))
+
 ;; Mythic variations 2 chaos factor changes:
 
 (defun chaos-factor-increase ()
