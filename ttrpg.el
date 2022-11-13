@@ -18,10 +18,14 @@
   "Running solo-ttrpgs."
   :group 'games)
 
+(defgroup mythic nil
+  "Mythic GM Emulator (variation 2)."
+  :group 'ttrpg)
+
 (defcustom mythic-chaos-factor 4
   "The chaos factor that influences fate checks.  Should be between 3 and 6.
 See p. 6 of Mythic Variations 2."
-  :group 'ttrpg
+  :group 'mythic
   :type 'integer)
 
 (make-variable-buffer-local 'mythic-chaos-factor)
@@ -36,7 +40,7 @@ See p. 6 of Mythic Variations 2."
 					 ("Has to be"       .  8)
 					 ("Impossible"      . -8))
   "Sets the modifiers for the various likelihoods."
-  :group 'ttrpg
+  :group 'mythic
   :type 'list)
 
 (defun mythic-fate-check-modifier-options ()
