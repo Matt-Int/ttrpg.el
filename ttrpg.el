@@ -524,6 +524,64 @@ THEME, ACTOR, DISPOSITION, and MODIFIER are passed to the parent function."
    "sTheme: \nsActor: \nsCurrent Disposition: \nsAdditional Modifier: ")
   (mythic-behaviour-check-new-action theme actor disposition modifier t))
 
+;; Statistics checks:
+
+(defcustom mythic-statistic-check-modifiers
+  '(("Important NPC" . 2)
+    ("Weak Attribute" . -2)
+    ("Strong Attribute" . 2)
+    ("Prime Attribute" . 4))
+  "Statsitcs Check Modifiers.  See p. 37 of Mythic Variations 2."
+  :type 'list
+  :group 'mythic)
+
+(defcustom mythic-statistic-check-table
+  '(((0  .  2) . "Very weak (-75%)")
+    ((3  .  4) . "Weak (-50%)")
+    ((5  .  6) . "Less (-10%)")
+    ((7  . 11) . "Expected Baseline")
+    ((12 . 14) . "More (+10%)")
+    ((15 . 16) . "Strong (+50%)")
+    ((17 . 18) . "Very Strong (+100%)")
+    ((19 . 20) . "PC Baseline")
+    ((21 . 22) . "PC Mode (+10%)")
+    ((23 . 24) . "PC Strong (+50%)")
+    ((25 . 26) . "PC Very Strong (+100%)"))
+  "Statisitc Check Table.  See page 37 in Mythic Variations 2."
+  :type 'list
+  :group 'mythic)
+
+(defun mythic-statistic--check (npc-modifier)
+  "Rolls on the `mythic-statistic-check-table' with the NPC-MODIFIER."
+  (let ((dice-roll (roll-dice-total 2 10))
+	(lookup)
+	(result))
+
+    (setq lookup (+ npc-modifier dice-roll))
+    (setq result (seq-filter #'(lambda (item)
+				 (and (<= (car (car item)) lookup)
+				      (>= (cdr (car item)) lookup)))
+			     mythic-statistic-check-table))
+    (cdr (car result))))
+
+(defun mythic-statistic-check (actor attribute &optional npc-modifier insert)
+  "Interactive function to make a statistics check for ACTOR's ATTRIBUTE.
+NPC-MODIFIER is the net modifier from `mythic-statistic-check-modifiers'.
+If INSERT is t then insert at current point instead of to minibuffer."
+  (interactive "sActor: \nsAttribute: \nn Net modifiers: ")
+  (let ((result))
+    (setq result
+	  (format "%s's %s is %s"
+		  actor attribute (mythic-statistic--check
+				  (if (numberp npc-modifier) npc-modifier 0))))
+    (if insert (insert result) (message result))))
+    
+(defun mythic-statistic-check-insert (actor attribute &optional npc-modifier)
+  "Wraps `mythic-statistic-check' with INSERT as t.
+ACTOR, ATTRIBUTE, and NPC-MODIFIER are passed to the parent function."
+  (interactive "sActor: \nsAttribute: \nn Net modifiers: ")
+  (mythic-statistic-check actor attribute npc-modifier t))
+
 
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
