@@ -374,5 +374,156 @@ See `event-check' for more details"
 
 ;; Behaviour checks:
 
+(defcustom mythic-behaviour-check-disposition-table
+  '(((5 . 5) . "Passive (-2)")
+    ((6 . 10) . "Moderate (0)")
+    ((11 . 15) . "Active (+2)")
+    ((16 . 16) . "Aggressive (+4)"))
+  "Disposition table for use with a `mythic-behaviour-check'.
+See page 22 in Mythic Variations 2."
+  :group 'mythic
+  :type 'list)
+
+(defcustom mythic-behaviour-check-npc-action-table-1
+  '("Theme Action" "Theme Action" "Theme Action"
+     "NPC Continues" "NPC Continues"
+     "NPC Continues (+2)"
+     "NPC Continues (-2)"
+     "NPC Action"
+     "NPC Action (-4)"
+     "NPC Action (+4)")
+  "NPC Action table 1.  See page 25 in Mythic Variations 2."
+  :type 'list
+  :group 'mythic)
+
+(defcustom mythic-behaviour-check-npc-action-table-2
+  '(((6 . 6) . "Talks, exposition")
+    ((7 . 8) . "Performs an ambiguous action")
+    ((9 . 10) . "Acts out of PC interest")
+    ((11 . 11) . "Gives something")
+    ((12 . 12) . "Seeks to end the encounter")
+    ((13 . 13) . "Changes the theme")
+    ((14 . 14) . "Changes descriptor")
+    ((15 . 17) . "Acts out of self interest")
+    ((18 . 18) . "Takes something")
+    ((19 . 19) . "Causes harm"))
+  "NPC Action table 2.  See page 26 in Mythic Variations 2."
+  :type 'list
+  :group 'mythic)
+
+(defun mythic-behaviour-check--disposition-score (&optional n-descriptors-pos
+							    n-descriptors-neg)
+  "Determine the disposition score.
+Using optional N-DESCRIPTORS-POS and N-DESCRIPTORS-NEG.
+See page 22 of Mythic Variations 2."
+  (let ((mod-add (* 2 (if (numberp n-descriptors-pos) n-descriptors-pos 0)))
+	(mod-sub (* -2 (if (numberp n-descriptors-neg) n-descriptors-neg 0)))
+	(mod-net) (disposition-score))
+    (setq mod-net (+ mod-add mod-sub))
+    (min 16 (max 5 (+ (roll-dice-total 2 10) mod-net)))
+    ))
+
+(defun mythic-behaviour-check--disposition (disposition-score)
+  "Retrieve the matching disposition from the DISPOSITION-SCORE.
+See `mythic-behaviour-check--disposition-score' for more details."
+  (let ((result))
+    (setq result (seq-filter #'(lambda (item)
+				 (and (<= (car (car item)) disposition-score)
+				      (>= (cdr (car item)) disposition-score)))
+			     mythic-behaviour-check-disposition-table))
+    (cdr (car result))))
+
+(defun mythic-behaviour-check--action ()
+  "Rolls on the NPC Action Table 1."
+  (seq-random-elt mythic-behaviour-check-npc-action-table-1))
+
+(defun mythic-behaviour-check--action-new (&optional disposition modifier)
+  "Rolls on the NPC Action Table 2.
+Applies optional DISPOSITION and MODIFIER to the roll.
+See page 26 of Mythic Variations 2."
+  (let ((roll (roll-dice-total 2 10))
+	(net-mod (+ (if (numberp disposition) disposition 0)
+		    (if (numberp modifier) modifier 0)))
+	(result)
+	(lookup))
+    (setq lookup (min 19 (max (+ roll net-mod) 6)))
+    (setq result (seq-filter #'(lambda (item)
+				 (and (<= (car (car item)) lookup)
+				      (>= (cdr (car item)) lookup)))
+			     mythic-behaviour-check-npc-action-table-2))
+    (cdr (car result))))
+
+
+(defun mythic-behaviour-check-disposition (identity
+					   personality activity
+					   &optional n-desc-pos n-desc-neg
+					   insert)
+  "Interactive function for checking the disposition.
+Takes inputs for IDENTITY, PERSONALITY, and ACTIVITY for user reference.
+Takes inputs for the N-DESC-POS and N-DESC-NEG for calculating disposition.
+If INSERT is t then insert the result at point instead of returning a message.
+See page 21 of Mythic Variations 2."
+  (interactive "sIdentity: \nsPersonality: \nsActivity: \nnActive Positive Descriptors: \nnActive Negative Descriptors: ")
+
+  (let ((result))
+    (setq result
+	  (format
+	   "Identity: %s\nPersonality: %s\nActivity: %s\nDispostition: %s"
+	   identity personality activity
+	   (mythic-behaviour-check--disposition
+	    (mythic-behaviour-check--disposition-score
+	     n-desc-pos n-desc-neg))))
+    (if insert (insert result) (message result))))
+
+(defun mythic-behaviour-check-disposition-insert (identity
+						  personality activity
+						  &optional
+						  n-desc-pos n-desc-neg)
+  "Interactive function to insert the result of a DISPOSITION CHECK.
+Passing IDENTITY PERSONALITY ACTIVITY and optional N-DESC-POS and N-DESC-NEG
+to `mythic-behaviour-check-disposition'."
+
+  (interactive "sIdentity: \nsPersonality: \nsActivity: \nnActive Positive Descriptors: \nnActive Negative Descriptors: ")
+  (mythic-behaviour-check-disposition identity personality activity
+				      n-desc-pos n-desc-neg t))
+
+(defun mythic-behaviour-check-action (theme actor &optional insert)
+  "Make a behaviour check for the THEME and ACTOR.
+If INSERT is t then insert the result at current point instead of message."
+  (interactive "sTheme: \nsActor: ")
+  (let ((action (mythic-behaviour-check--action))
+	(result))
+    (setq result (format "Theme: %s\nActor: %s\nAction: %s"
+			 theme actor action))
+    (if insert (insert result) (message result))))
+
+(defun mythic-behaviour-check-action-insert (theme actor)
+  "Check the action for a THEME and ACTOR.
+See `mythic-behaviour-check-action'."
+  (interactive "sTheme: \nsActor: ")
+  (mythic-behaviour-check-action theme actor t))
+
+(defun mythic-behaviour-check-new-action (theme actor disposition modifier
+						&optional insert)
+  "Make a new action check for the THEME and ACTOR.
+DISPOSITION and MODIFIER are passed to `mythic-behaviour-check--action-new'.
+If INSERT is t then insert at point instead of echoing to minibuffer."
+  (interactive
+   "sTheme: \nsActor: \nsCurrent Disposition: \nsAdditional Modifier: ")
+  (let ((action (mythic-behaviour-check--action-new))
+	(result))
+    (setq result (format "Theme: %s\nActor: %s\nAction: %s"
+			 theme actor action))
+    (if insert (insert result) (message result))))
+
+(defun mythic-behaviour-check-new-action-insert (theme actor
+						       disposition modifier)
+  "Wraps `mythic-behaviour-check-action' with INSERT as t.
+THEME, ACTOR, DISPOSITION, and MODIFIER are passed to the parent function."
+  (interactive
+   "sTheme: \nsActor: \nsCurrent Disposition: \nsAdditional Modifier: ")
+  (mythic-behaviour-check-new-action theme actor disposition modifier t))
+
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
