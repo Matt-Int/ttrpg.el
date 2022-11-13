@@ -262,6 +262,36 @@ See `fate-check' for more details"
   (fate-check question t))
 
 
+;; Mythic Variations 2 Detail Check:
+
+(defun detail-check (question &optional insert)
+  "Interactive function for making a DETAIL CHECK for a particular QUESTION.
+Set the optional INSERT to t to insert at point instead of echoing to the
+mini-buffer."
+  (interactive "sDetail Check Question: \n")
+  (let ((result "")
+	(likelihood-modifier (car(assoc mythic-chaos-factor
+				    mythic-detail-check-modifiers)))
+	(dice-result))
+    
+    (if (eq likelihood-modifier nil)
+	(setq likelihood-modifier 0))
+    (setq dice-result (max
+		       (min 18
+			    (+ (roll-dice-total 2 10) likelihood-modifier))
+		       4))
+    (setq result (format "Q: %s\nA: %s"
+			 question
+			 (cdr (assoc dice-result mythic-detail-check-table))))
+
+    (if (eq insert t) (insert result) (message result))))
+
+(defun detail-check-insert (question)
+  "Interactive function to insert the result of a DETAIL CHECK for a QUESTION.
+See `detail-check' for more details"
+  (interactive "sDetail Check Question: \n")
+  (detail-check question t))
+
 ;; Mythic variations 2 chaos factor changes:
 
 (defun chaos-factor-increase ()
