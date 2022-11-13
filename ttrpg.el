@@ -43,6 +43,30 @@ See p. 6 of Mythic Variations 2."
   :group 'mythic
   :type 'list)
 
+(defcustom mythic-detail-check-table '((4 . "Anger")
+				       (5 . "Sadness")
+				       (6 . "Fear")
+				       (7 . "Disfavours Thread")
+				       (8 . "Disfavours NPC")
+				       (9 . "Focus NPC")
+				       (10 . "Favours NPC")
+				       (11 . "Focus PC")
+				       (12 . "Disfavours NPC")
+				       (13 . "Focus Thread")
+				       (14 . "Favours PC")
+				       (15 . "Favours Thread")
+				       (16 . "Courage")
+				       (17 . "Happiness")
+				       (18 . "Calm"))
+  "A DETAIL CHECK table.  See page 11 of Mythic Variations 2."
+  :type 'list
+  :group 'mythic)
+
+(defcustom mythic-detail-check-modifiers '((3 . 2)
+					   (6 . -2))
+  "Modifiers to apply when the `mythic-chaos-factor' matches the CAR."
+  :type 'list
+  :group 'mythic)
 (defun mythic-fate-check-modifier-options ()
   "Gets the options from `mythic-fate-check-modifiers'.
 These options are available to select when doing a FATE CHECK."
