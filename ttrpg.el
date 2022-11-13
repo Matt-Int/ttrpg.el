@@ -182,6 +182,22 @@ Value should be a cons of two lists with the CAR matching action table
   :type 'list
   :group 'mythic)
 
+(defcustom mythic-event-focus-table '(((1  .  7)  . "Remote Event")
+				      ((8  . 28)  . "NPC Action")
+				      ((29 . 35)  . "Introduce a new NPC")
+				      ((36 . 45)  . "Move toward a thread")
+				      ((46 . 52)  . "Move Away from a thread")
+				      ((53 . 55)  . "Close a thread")
+				      ((56 . 67)  . "PC Negative")
+				      ((68 . 75)  . "PC Positive")
+				      ((76 . 83)  . "Ambiguous Event")
+				      ((84 . 92)  . "NPC Negative")
+				      ((93 . 100) . "NPC Positive"))
+  "Event focus table, CAR is the range, CDR is the focus of the event.
+See page 19 in Mythic Variations 2"
+  :group 'mythic
+  :type '(cons (cons integer integer) string))
+
 (defun mythic-fate-check-modifier-options ()
   "Gets the options from `mythic-fate-check-modifiers'.
 These options are available to select when doing a FATE CHECK."
@@ -327,6 +343,36 @@ It also resets to the minimum in case it has somehow gone beyond the min."
 	(message "Chaos factor is already at min.")
 	(setq mythic-chaos-factor 3))
     (setq mythic-chaos-factor (- mythic-chaos-factor 1))))
+
+
+;; Event Checks:
+
+(defun event--check ()
+  "Make an EVENT-CHECK.  See page 18 in Mythic Variations 2."
+  (let ((dice-roll (roll-dice-total 1 100)))
+    (seq-filter #'(lambda (item)
+		    (and (>= (cdr (car item)) dice-roll)
+			 (<= (car (car item)) dice-roll)))
+		mythic-event-focus-table)))
+
+(defun event-check (&optional insert)
+  "Interactive function for making an EVENT CHECK.
+Set the optional INSERT to t to insert at point instead of echoing to the
+mini-buffer."
+  (interactive)
+  (let ((result ""))
+    (setq result (format "Event Focus: *%s*"
+			 (cdr (car (event--check)))))
+
+    (if (eq insert t) (insert result) (message result))))
+
+(defun event-check-insert ()
+  "Interactive function to insert the result of an EVENT CHECK.
+See `event-check' for more details"
+  (interactive)
+  (event-check t))
+
+;; Behaviour checks:
 
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
