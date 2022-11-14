@@ -243,9 +243,9 @@ See p.6 of Mythic Variations 2."
             (setq response (concat response " (Extreme)")))))
     response))
 
-(defun fate-check (question &optional insert)
+(defun fate-check (question)
   "Interactive function for making a FATE CHECK for a particular QUESTION.
-Set the optional INSERT to t to insert at point instead of echoing to the
+Run with a prefix argument to insert at point instead of echoing to the
 mini-buffer."
   (interactive "sFate Check Question: \n")
   (let ((likelihood (completing-read "How likely is this? "
@@ -269,21 +269,14 @@ mini-buffer."
 		  (chaos-roll
 		   mythic-chaos-factor
 		   likelihood-modifier)))
-    (if (eq insert t) (insert result) (message result))))
-
-(defun fate-check-insert (question)
-  "Interactive function to insert the result of a FATE CHECK for a QUESTION.
-See `fate-check' for more details"
-  (interactive "sFate Check Question: \n")
-  (fate-check question t))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 
 ;; Mythic Variations 2 Detail Check:
 
-(defun detail-check (question &optional insert)
+(defun detail-check (question)
   "Interactive function for making a DETAIL CHECK for a particular QUESTION.
-Set the optional INSERT to t to insert at point instead of echoing to the
-mini-buffer."
+Run with a prefix argument to insert instead of echoing to the mini-buffer."
   (interactive "sDetail Check Question: \n")
   (let ((result "")
 	(likelihood-modifier (car(assoc mythic-chaos-factor
@@ -300,29 +293,30 @@ mini-buffer."
 			 question
 			 (cdr (assoc dice-result mythic-detail-check-table))))
 
-    (if (eq insert t) (insert result) (message result))))
-
-(defun detail-check-insert (question)
-  "Interactive function to insert the result of a DETAIL CHECK for a QUESTION.
-See `detail-check' for more details"
-  (interactive "sDetail Check Question: \n")
-  (detail-check question t))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 ;; Extra meaning results
 
 (defun mythic-description ()
   "Return a random selection from `mythic-meaning-table-descriptions'."
   (interactive)
-  (format "%s %s"
-	  (seq-random-elt (car mythic-meaning-table-descriptions))
-	  (seq-random-elt (cdr mythic-meaning-table-descriptions))))
+  (let ((result))
+    (setq result
+	  (format "%s %s"
+		  (seq-random-elt (car mythic-meaning-table-descriptions))
+		  (seq-random-elt (cdr mythic-meaning-table-descriptions))))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 (defun mythic-action ()
   "Return a random selection from `mythic-meaning-table-actions'."
   (interactive)
-  (format "%s %s"
-	  (seq-random-elt (car mythic-meaning-table-actions))
-	  (seq-random-elt (cdr mythic-meaning-table-actions))))
+  (let ((result))
+    (setq result
+	  (format "%s %s"
+		  (seq-random-elt (car mythic-meaning-table-actions))
+		  (seq-random-elt (cdr mythic-meaning-table-actions))))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
+
 
 ;; Mythic variations 2 chaos factor changes:
 
@@ -355,22 +349,17 @@ It also resets to the minimum in case it has somehow gone beyond the min."
 			 (<= (car (car item)) dice-roll)))
 		mythic-event-focus-table)))
 
-(defun event-check (&optional insert)
+(defun event-check ()
   "Interactive function for making an EVENT CHECK.
-Set the optional INSERT to t to insert at point instead of echoing to the
+Call with a prefix to insert at point instead of echoing to the
 mini-buffer."
   (interactive)
   (let ((result ""))
     (setq result (format "Event Focus: *%s*"
 			 (cdr (car (event--check)))))
 
-    (if (eq insert t) (insert result) (message result))))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
-(defun event-check-insert ()
-  "Interactive function to insert the result of an EVENT CHECK.
-See `event-check' for more details"
-  (interactive)
-  (event-check t))
 
 ;; Behaviour checks:
 
@@ -456,12 +445,12 @@ See page 26 of Mythic Variations 2."
 
 (defun mythic-behaviour-check-disposition (identity
 					   personality activity
-					   &optional n-desc-pos n-desc-neg
-					   insert)
+					   &optional n-desc-pos n-desc-neg)
   "Interactive function for checking the disposition.
 Takes inputs for IDENTITY, PERSONALITY, and ACTIVITY for user reference.
 Takes inputs for the N-DESC-POS and N-DESC-NEG for calculating disposition.
-If INSERT is t then insert the result at point instead of returning a message.
+If called with a prefix then insert the result at point instead of returning a
+message.
 See page 21 of Mythic Variations 2."
   (interactive "sIdentity: \nsPersonality: \nsActivity: \nnActive Positive Descriptors: \nnActive Negative Descriptors: ")
 
@@ -473,35 +462,20 @@ See page 21 of Mythic Variations 2."
 	   (mythic-behaviour-check--disposition
 	    (mythic-behaviour-check--disposition-score
 	     n-desc-pos n-desc-neg))))
-    (if insert (insert result) (message result))))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
-(defun mythic-behaviour-check-disposition-insert (identity
-						  personality activity
-						  &optional
-						  n-desc-pos n-desc-neg)
-  "Interactive function to insert the result of a DISPOSITION CHECK.
-Passing IDENTITY PERSONALITY ACTIVITY and optional N-DESC-POS and N-DESC-NEG
-to `mythic-behaviour-check-disposition'."
 
-  (interactive "sIdentity: \nsPersonality: \nsActivity: \nnActive Positive Descriptors: \nnActive Negative Descriptors: ")
-  (mythic-behaviour-check-disposition identity personality activity
-				      n-desc-pos n-desc-neg t))
-
-(defun mythic-behaviour-check-action (theme actor &optional insert)
+(defun mythic-behaviour-check-action (theme actor)
   "Make a behaviour check for the THEME and ACTOR.
-If INSERT is t then insert the result at current point instead of message."
+If called with a prefix then insert the result at current point instead of
+message."
   (interactive "sTheme: \nsActor: ")
   (let ((action (mythic-behaviour-check--action))
 	(result))
     (setq result (format "Theme: %s\nActor: %s\nAction: %s"
 			 theme actor action))
-    (if insert (insert result) (message result))))
+    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
-(defun mythic-behaviour-check-action-insert (theme actor)
-  "Check the action for a THEME and ACTOR.
-See `mythic-behaviour-check-action'."
-  (interactive "sTheme: \nsActor: ")
-  (mythic-behaviour-check-action theme actor t))
 
 (defun mythic-behaviour-check-new-action (theme actor disposition modifier
 						&optional insert)
