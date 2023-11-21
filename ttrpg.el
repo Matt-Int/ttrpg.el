@@ -123,7 +123,7 @@ See p.26 of Mythic GME 2nd Edition."
 	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
 	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
 	  "Result: 98" "Result: 99" "Result: 100"))
-  "Meaning Table: Descriptions from Mythic Variations 2, see page 16.
+  "Meaning Table: Descriptions from Mythic 2nd Edition, see page 47.
 Value should be a cons of two lists with the CAR matching description table
 1 and the CDR matching description table 2."
   :type 'list
@@ -180,7 +180,7 @@ Value should be a cons of two lists with the CAR matching description table
 	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
 	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
 	  "Result: 98" "Result: 99" "Result: 100"))
-  "Meaning Table: Actions from Mythic Variations 2, see page 17.
+  "Meaning Table: Actions from Mythic 2nd Edition, see page 48.
 Value should be a cons of two lists with the CAR matching action table
 1 and the CDR matching action table 2."
   :type 'list
