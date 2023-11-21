@@ -288,7 +288,7 @@ mini-buffer."
     (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 
-;; Mythic variations 2 chaos factor changes:
+;; Mythic 2nd Edition chaos factor changes:
 
 (defun chaos-factor-increase ()
   "Increases the chaos factor by one unless it is at the maximum.
