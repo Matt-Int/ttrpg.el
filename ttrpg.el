@@ -159,6 +159,13 @@ Value should be a cons of two lists with the CAR matching action table
   :type 'list
   :group 'mythic)
 
+(defcustom mythic-meaning-tables-elements '(("Table Name"
+					     "Entry 1" "Entry 2"))
+  "Meaning Table: Elements from Mythic 2nd Edition, see pages 201-215."
+  :group 'mythic
+  :type '(alist :key-type (string :tag "Element Table")
+		:value-type (repeat (string :tag "Element"))))
+
 (defcustom mythic-event-focus-table '(((1  .  5)  . "Remote Event")
 				      ((6  . 10)  . "Ambiguous Event")
 				      ((11 . 20)  . "New NPC")
@@ -278,6 +285,16 @@ mini-buffer."
 		  (seq-random-elt (car mythic-meaning-table-actions))
 		  (seq-random-elt (cdr mythic-meaning-table-actions))))
     (if (equal current-prefix-arg nil) (message result) (insert result))))
+
+(defun mythic-elements (element)
+  "Find 2 ELEMENT's from `mythic-meaning-tables-elements'."
+  (let ((result))
+    (setq result
+	  (format "%s %s"
+		  (seq-random-elt
+		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))
+		  (seq-random-elt
+		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))))))
 
 
 ;; Mythic 2nd Edition chaos factor changes:
