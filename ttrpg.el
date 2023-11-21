@@ -248,16 +248,17 @@ mini-buffer."
 See p.127 in Mythic 2nd Edition"
   (let ((answer (chaos-roll mythic-chaos-factor 0))
 	(result))
-      (cond ((and (string-match-p "Yes" answer) (not (string-match-p "Exceptional" answer))) (setq result expected))
-	    ((and (string-match-p "No" answer) (not (string-match-p "Exceptional" answer))) (setq expected (* expected 0.75)))
-	    ((string-match-p "\\(Yes\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 1.25)))
-	    ((string-match-p "\\(No\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 0.5))))
-      (if (string-match-p "Random Event" answer)
-	  (setq result (format "%s (Special Condition)" expected))
-	(setq result (format "%s" expected)))
-      result
-      )
-  )
+    (cond
+     ((and (string-match-p "Yes" answer)
+	   (not (string-match-p "Exceptional" answer))) (setq result expected))
+     ((and (string-match-p "No" answer)
+	   (not (string-match-p "Exceptional" answer))) (setq expected (* expected 0.75)))
+     ((string-match-p "\\(Yes\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 1.25)))
+     ((string-match-p "\\(No\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 0.5))))
+    (if (string-match-p "Random Event" answer)
+	(setq result (format "%s (Special Condition)" expected))
+      (setq result (format "%s" expected)))
+    result))
 
 (defun mythic-statistic-check (actor attribute expected &optional insert)
   "Interactive function to make a statistics check for ACTOR's ATTRIBUTE.
