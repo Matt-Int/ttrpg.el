@@ -247,14 +247,6 @@ mini-buffer."
 	(likelihood-modifier))
     (setq likelihood-modifier (cdr (assoc likelihood
 					  mythic-fate-check-modifiers)))
-    (if (eq 3 mythic-chaos-factor)
-	(if (yes-or-no-p "Is a yes favourable?")
-	    (setq likelihood-modifier (+ 2 likelihood-modifier))
-	  (setq likelihood-modifier (- 2 likelihood-modifier)))
-      (if (eq 6 mythic-chaos-factor)
-	  (if (yes-or-no-p "Is a yes favourable?")
-	      (setq likelihood-modifier (- 2 likelihood-modifier))
-	    (setq likelihood-modifier (+ 2 likelihood-modifier)))))
     (setq result
 	  (format "Q: %s (%s)\nA: %s"
 		  question
