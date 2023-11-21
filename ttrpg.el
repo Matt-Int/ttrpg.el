@@ -24,7 +24,7 @@
 
 (defcustom mythic-chaos-factor 5
   "The chaos factor that influences fate checks.  Should be between 1 and 9.
-See p. 19 of Mythic GME 2nd Edition."
+See p. 19, 22 of Mythic GME 2nd Edition."
   :group 'mythic
   :type 'integer)
 
