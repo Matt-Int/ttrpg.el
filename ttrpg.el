@@ -185,19 +185,20 @@ Value should be a cons of two lists with the CAR matching action table
   :type 'list
   :group 'mythic)
 
-(defcustom mythic-event-focus-table '(((1  .  7)  . "Remote Event")
-				      ((8  . 28)  . "NPC Action")
-				      ((29 . 35)  . "Introduce a new NPC")
-				      ((36 . 45)  . "Move toward a thread")
-				      ((46 . 52)  . "Move Away from a thread")
-				      ((53 . 55)  . "Close a thread")
-				      ((56 . 67)  . "PC Negative")
-				      ((68 . 75)  . "PC Positive")
-				      ((76 . 83)  . "Ambiguous Event")
-				      ((84 . 92)  . "NPC Negative")
-				      ((93 . 100) . "NPC Positive"))
+(defcustom mythic-event-focus-table '(((1  .  5)  . "Remote Event")
+				      ((6  . 10)  . "Ambiguous Event")
+				      ((11 . 20)  . "New NPC")
+				      ((21 . 40)  . "NPC Action")
+				      ((41 . 45)  . "NPC Negative")
+				      ((46 . 50)  . "NPC Positive")
+				      ((51 . 55)  . "move towards a thread")
+				      ((56 . 65)  . "Move Away From A Thread")
+				      ((66 . 70)  . "Close A Thread")
+				      ((71 . 80)  . "PC Negative")
+				      ((81 . 85)  . "PC Positive")
+				      ((86 . 100) . "Current Context"))
   "Event focus table, CAR is the range, CDR is the focus of the event.
-See page 19 in Mythic Variations 2"
+See page 37 in Mythic 2nd Edition"
   :group 'mythic
   :type '(alist :key-type (alist :key-type (number :tag "min")
 				 :value-type (number :tag "max"))
