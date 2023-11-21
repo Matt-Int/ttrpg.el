@@ -287,10 +287,6 @@ ACTOR, ATTRIBUTE, and EXPECTED are passed to the parent function."
 (defun ttrpg-roll-over-p (target n-dice n-sides)
   "Check if a dice roll with N-DICE and N-SIDES was over or equal to a TARGET."
   (>= (roll-dice-total n-dice n-sides)))
-
-;; UNE:
-
-;;; TODO: put UNE mechanics here
   
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
