@@ -19,7 +19,7 @@
   :group 'games)
 
 (defgroup mythic nil
-  "Mythic GM Emulator (variation 2)."
+  "Mythic GM Emulator (2nd Edition)."
   :group 'ttrpg)
 
 (defcustom mythic-chaos-factor 5
