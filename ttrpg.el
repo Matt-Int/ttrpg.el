@@ -169,23 +169,23 @@ mini-buffer."
 ;; Extra meaning results
 
 (defun mythic-description ()
-  "Return a random selection from `mythic-meaning-table-descriptions'."
+  "Return a random selection from the description part of `mythic-meaning-tables'."
   (interactive)
   (let ((result))
     (setq result
 	  (format "%s %s"
-		  (seq-random-elt (car mythic-meaning-table-descriptions))
-		  (seq-random-elt (cdr mythic-meaning-table-descriptions))))
+		  (seq-random-elt (car (car (cdr mythic-meaning-tables))))
+		  (seq-random-elt (car (cdr (car (cdr mythic-meaning-tables)))))))
     (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 (defun mythic-action ()
-  "Return a random selection from `mythic-meaning-table-actions'."
+  "Return a random selection from the action part of `mythic-meaning-tables'."
   (interactive)
   (let ((result))
     (setq result
 	  (format "%s %s"
-		  (seq-random-elt (car mythic-meaning-table-actions))
-		  (seq-random-elt (cdr mythic-meaning-table-actions))))
+		  (seq-random-elt (car (car mythic-meaning-tables)))
+		  (seq-random-elt (car (cdr (car mythic-meaning-tables))))))
     (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 (defun mythic-elements (element)
