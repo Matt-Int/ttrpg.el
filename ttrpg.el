@@ -200,27 +200,40 @@ These options are available to select when doing a FATE CHECK."
   "Rolls N-DICE with N-SIDES and sums the result."
   (seq-reduce #'+ (roll-dice n-dice n-sides) 0))
 
-;; Mythic Variations 2 Fate Check:
+;; Mythic 2nd Edition Fate Check:
+
+(defun between-p (number low high)
+  "Compares NUMBER if it is between LOW and HIGH.
+Comparison is inclusive on both ends."
+  (and (<= number high) (>= number low)))
+
+(defun calc-chaos-modifier (chaos-rank)
+  "Calculates what the modification is based on the CHAOS-RANK."
+  (round (+ -6.167 (* 1.233 chaos-rank)))) ; calculated using linear regression, go stats!
+
 
 (defun chaos-roll (chaos-rank likelihood-modifier)
-  "Rolls 3d10, where one die is the chaos die.
-The total is checked against some threshold +- the LIKELIHOOD-MODIFIER.
-The chaos die is checked against the CHAOS-RANK to see if a random
+  "Rolls 2d10 and sums them up.
+The total +- the LIKELIHOOD-MODIFIER and CHAOS-RANK is checked against 11.
+If the result is between 18-20 it is an Exceptional Yes.
+If the result is between 2-4 it is an Exceptional No.
+If both dice are the same and within the Chaos factor then a random
 event occurs.
-See p.6 of Mythic Variations 2."
+See p.25-26 of Mythic 2nd Edition."
 
-  (let ((chaos-die (roll-die 10))
-        (die-one (roll-die 10))
+  (let ((die-one (roll-die 10))
         (die-two (roll-die 10))
-        (response "No!"))
-    (if (< (+ die-one die-two) (+ 11 likelihood-modifier))
-        (setq response "Yes!"))
-    (if (and (eq die-one die-two) (< chaos-die chaos-rank))
-        (setq response (concat response " (Extreme + Random Event)"))
-      (if (and (eq 0 (mod die-one 2)) (eq 0 (mod die-two 2)))
-          (setq response (concat response " (Random Event)"))
-        (if (and (not (eq (mod die-one 2) 0)) (not (eq (mod die-two 2) 0)))
-            (setq response (concat response " (Extreme)")))))
+	(roll-modifier (+ likelihood-modifier (calc-chaos-modifier chaos-rank)))
+        (response "No"))
+    (if (>= (+ die-one die-two) (+ 11 roll-modifier))
+        (setq response "Yes"))
+    (if (or (between-p (+ die-one die-two roll-modifier) 18 20)
+	    (between-p (+ die-one die-two roll-modifier)  2  4))
+	(setq response (concat response " + Exceptional")))
+    (if (and (eq die-one die-two) (<= die-one chaos-rank))
+        (setq response (concat response " + Random Event")))
+    (message "d1: %s d2: %s modifier: %s total: %s result: %s"
+	     die-one die-two roll-modifier (+ die-one die-two roll-modifier) response)
     response))
 
 (defun fate-check (question)
