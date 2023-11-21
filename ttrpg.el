@@ -45,118 +45,20 @@ See p.26 of Mythic GME 2nd Edition."
   :type '(alist :key-type (string :tag "Label")
 		:value-type (number :tag "Modifier")))
 
-(defcustom mythic-meaning-table-descriptions
-  (cons '("Result: 1"  "Result: 2" "Result: 3" "Result: 5"
-	  "Result: 6" "Result: 7" "Result: 8" "Result: 9"
-	  "Result: 10" "Result: 11" "Result: 12" "Result: 13"
-	  "Result: 14" "Result: 15" "Result: 16" "Result: 17"
-	  "Result: 18" "Result: 19" "Result: 20" "Result: 21"
-	  "Result: 22" "Result: 23" "Result: 24" "Result: 25"
-	  "Result: 26" "Result: 27" "Result: 28" "Result: 29"
-	  "Result: 30" "Result: 31" "Result: 32" "Result: 33"
-	  "Result: 34" "Result: 35" "Result: 36" "Result: 37"
-	  "Result: 38" "Result: 39" "Result: 40" "Result: 41"
-	  "Result: 42" "Result: 43" "Result: 44" "Result: 45"
-	  "Result: 46" "Result: 47" "Result: 48" "Result: 49"
-	  "Result: 50" "Result: 51" "Result: 52" "Result: 53"
-	  "Result: 54" "Result: 55" "Result: 56" "Result: 57"
-	  "Result: 58" "Result: 59" "Result: 60" "Result: 61"
-	  "Result: 62" "Result: 63" "Result: 64" "Result: 65"
-	  "Result: 66" "Result: 67" "Result: 68" "Result: 69"
-	  "Result: 70" "Result: 71" "Result: 72" "Result: 73"
-	  "Result: 74" "Result: 75" "Result: 76" "Result: 77"
-	  "Result: 78" "Result: 79" "Result: 80" "Result: 81"
-	  "Result: 82" "Result: 83" "Result: 84" "Result: 85"
-	  "Result: 86" "Result: 87" "Result: 88" "Result: 89"
-	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
-	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
-	  "Result: 98" "Result: 99" "Result: 100")
-	'("Result: 1"  "Result: 2" "Result: 3" "Result: 5"
-	  "Result: 6" "Result: 7" "Result: 8" "Result: 9"
-	  "Result: 10" "Result: 11" "Result: 12" "Result: 13"
-	  "Result: 14" "Result: 15" "Result: 16" "Result: 17"
-	  "Result: 18" "Result: 19" "Result: 20" "Result: 21"
-	  "Result: 22" "Result: 23" "Result: 24" "Result: 25"
-	  "Result: 26" "Result: 27" "Result: 28" "Result: 29"
-	  "Result: 30" "Result: 31" "Result: 32" "Result: 33"
-	  "Result: 34" "Result: 35" "Result: 36" "Result: 37"
-	  "Result: 38" "Result: 39" "Result: 40" "Result: 41"
-	  "Result: 42" "Result: 43" "Result: 44" "Result: 45"
-	  "Result: 46" "Result: 47" "Result: 48" "Result: 49"
-	  "Result: 50" "Result: 51" "Result: 52" "Result: 53"
-	  "Result: 54" "Result: 55" "Result: 56" "Result: 57"
-	  "Result: 58" "Result: 59" "Result: 60" "Result: 61"
-	  "Result: 62" "Result: 63" "Result: 64" "Result: 65"
-	  "Result: 66" "Result: 67" "Result: 68" "Result: 69"
-	  "Result: 70" "Result: 71" "Result: 72" "Result: 73"
-	  "Result: 74" "Result: 75" "Result: 76" "Result: 77"
-	  "Result: 78" "Result: 79" "Result: 80" "Result: 81"
-	  "Result: 82" "Result: 83" "Result: 84" "Result: 85"
-	  "Result: 86" "Result: 87" "Result: 88" "Result: 89"
-	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
-	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
-	  "Result: 98" "Result: 99" "Result: 100"))
-  "Meaning Table: Descriptions from Mythic 2nd Edition, see page 47.
-Value should be a cons of two lists with the CAR matching description table
-1 and the CDR matching description table 2."
-  :type 'list
-  :group 'mythic)
-
-(defcustom mythic-meaning-table-actions
-  (cons '("Result: 1"  "Result: 2" "Result: 3" "Result: 5"
-	  "Result: 6" "Result: 7" "Result: 8" "Result: 9"
-	  "Result: 10" "Result: 11" "Result: 12" "Result: 13"
-	  "Result: 14" "Result: 15" "Result: 16" "Result: 17"
-	  "Result: 18" "Result: 19" "Result: 20" "Result: 21"
-	  "Result: 22" "Result: 23" "Result: 24" "Result: 25"
-	  "Result: 26" "Result: 27" "Result: 28" "Result: 29"
-	  "Result: 30" "Result: 31" "Result: 32" "Result: 33"
-	  "Result: 34" "Result: 35" "Result: 36" "Result: 37"
-	  "Result: 38" "Result: 39" "Result: 40" "Result: 41"
-	  "Result: 42" "Result: 43" "Result: 44" "Result: 45"
-	  "Result: 46" "Result: 47" "Result: 48" "Result: 49"
-	  "Result: 50" "Result: 51" "Result: 52" "Result: 53"
-	  "Result: 54" "Result: 55" "Result: 56" "Result: 57"
-	  "Result: 58" "Result: 59" "Result: 60" "Result: 61"
-	  "Result: 62" "Result: 63" "Result: 64" "Result: 65"
-	  "Result: 66" "Result: 67" "Result: 68" "Result: 69"
-	  "Result: 70" "Result: 71" "Result: 72" "Result: 73"
-	  "Result: 74" "Result: 75" "Result: 76" "Result: 77"
-	  "Result: 78" "Result: 79" "Result: 80" "Result: 81"
-	  "Result: 82" "Result: 83" "Result: 84" "Result: 85"
-	  "Result: 86" "Result: 87" "Result: 88" "Result: 89"
-	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
-	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
-	  "Result: 98" "Result: 99" "Result: 100")
-	'("Result: 1"  "Result: 2" "Result: 3" "Result: 5"
-	  "Result: 6" "Result: 7" "Result: 8" "Result: 9"
-	  "Result: 10" "Result: 11" "Result: 12" "Result: 13"
-	  "Result: 14" "Result: 15" "Result: 16" "Result: 17"
-	  "Result: 18" "Result: 19" "Result: 20" "Result: 21"
-	  "Result: 22" "Result: 23" "Result: 24" "Result: 25"
-	  "Result: 26" "Result: 27" "Result: 28" "Result: 29"
-	  "Result: 30" "Result: 31" "Result: 32" "Result: 33"
-	  "Result: 34" "Result: 35" "Result: 36" "Result: 37"
-	  "Result: 38" "Result: 39" "Result: 40" "Result: 41"
-	  "Result: 42" "Result: 43" "Result: 44" "Result: 45"
-	  "Result: 46" "Result: 47" "Result: 48" "Result: 49"
-	  "Result: 50" "Result: 51" "Result: 52" "Result: 53"
-	  "Result: 54" "Result: 55" "Result: 56" "Result: 57"
-	  "Result: 58" "Result: 59" "Result: 60" "Result: 61"
-	  "Result: 62" "Result: 63" "Result: 64" "Result: 65"
-	  "Result: 66" "Result: 67" "Result: 68" "Result: 69"
-	  "Result: 70" "Result: 71" "Result: 72" "Result: 73"
-	  "Result: 74" "Result: 75" "Result: 76" "Result: 77"
-	  "Result: 78" "Result: 79" "Result: 80" "Result: 81"
-	  "Result: 82" "Result: 83" "Result: 84" "Result: 85"
-	  "Result: 86" "Result: 87" "Result: 88" "Result: 89"
-	  "Result: 90" "Result: 91" "Result: 92" "Result: 93"
-	  "Result: 94" "Result: 95" "Result: 96" "Result: 97"
-	  "Result: 98" "Result: 99" "Result: 100"))
-  "Meaning Table: Actions from Mythic 2nd Edition, see page 48.
-Value should be a cons of two lists with the CAR matching action table
-1 and the CDR matching action table 2."
-  :type 'list
+(defcustom mythic-meaning-tables '((("Result 1a" "Result 2a")
+				    ("Result 3a" "Result 4a"))
+				   (("Result 1d" "Result 2d")
+				    ("Result 3d" "Result 4d")))
+  "Meaning Table: Descriptions & Actions from Mythic 2nd Edition.
+See page 46-47 of Mythic 2nd Edition.
+Value is a nested list in the order of Action table 1 entries,
+Action table 2 entries,
+Description table 1 entrie, and description table 2 entries."
+  :type '(list :tag "Mythic Meaning Tables"
+	  (list :tag "Actions" (repeat :tag "Table 1" (string :tag "Action"))
+		(repeat :tag "Table 2" (string :tag "Action")))
+	  (list :tag "Descriptions" (repeat :tag "Table 1" (string :tag "Description"))
+		(repeat :tag "Table 2" (string :tag "Description"))))
   :group 'mythic)
 
 (defcustom mythic-meaning-tables-elements '(("Table Name"
