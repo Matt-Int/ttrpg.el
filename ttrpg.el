@@ -30,16 +30,17 @@ See p. 19, 22 of Mythic GME 2nd Edition."
 
 (make-variable-buffer-local 'mythic-chaos-factor)
 
-(defcustom mythic-fate-check-modifiers '(("50/50 or Unsure" .  0)
-					 ("Likely"          .  2)
-					 ("Unlikely"        . -2)
-					 ("Very Likely"     .  4)
-					 ("Very Unlikely"   . -4)
-					 ("Sure Thing"      .  6)
-					 ("No Way"          . -6)
-					 ("Has to be"       .  8)
-					 ("Impossible"      . -8))
-  "Sets the modifiers for the various likelihoods."
+(defcustom mythic-fate-check-modifiers '(("50/50"              .  0)
+					 ("Likely"             .  1)
+					 ("Unlikely"           . -1)
+					 ("Very Likely"        .  2)
+					 ("Very Unlikely"      . -2)
+					 ("Nearly Certain"     .  4)
+					 ("Nearly Impossible"  . -4)
+					 ("Certain"            .  5)
+					 ("Impossible"         . -5))
+  "Sets the modifiers for the various likelihoods.
+See p.26 of Mythic GME 2nd Edition."
   :group 'mythic
   :type '(alist :key-type (string :tag "Label")
 		:value-type (number :tag "Modifier")))
