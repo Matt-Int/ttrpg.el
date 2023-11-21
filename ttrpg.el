@@ -45,33 +45,6 @@ See p.26 of Mythic GME 2nd Edition."
   :type '(alist :key-type (string :tag "Label")
 		:value-type (number :tag "Modifier")))
 
-(defcustom mythic-detail-check-table '((4 . "Anger")
-				       (5 . "Sadness")
-				       (6 . "Fear")
-				       (7 . "Disfavours Thread")
-				       (8 . "Disfavours NPC")
-				       (9 . "Focus NPC")
-				       (10 . "Favours NPC")
-				       (11 . "Focus PC")
-				       (12 . "Disfavours NPC")
-				       (13 . "Focus Thread")
-				       (14 . "Favours PC")
-				       (15 . "Favours Thread")
-				       (16 . "Courage")
-				       (17 . "Happiness")
-				       (18 . "Calm"))
-  "A DETAIL CHECK table.  See page 11 of Mythic Variations 2."
-  :type '(alist :key-type (number :tag "Die result")
-		:value-type (string :tag "Answer"))
-  :group 'mythic)
-
-(defcustom mythic-detail-check-modifiers '((3 . 2)
-					   (6 . -2))
-  "Modifiers to apply when the `mythic-chaos-factor' matches the CAR."
-  :type '(alist :key-type (number :tag "Chaos Factor")
-		:value-type (number :tag "Modifier"))
-  :group 'mythic)
-
 (defcustom mythic-meaning-table-descriptions
   (cons '("Result: 1"  "Result: 2" "Result: 3" "Result: 5"
 	  "Result: 6" "Result: 7" "Result: 8" "Result: 9"
@@ -278,29 +251,6 @@ mini-buffer."
 		   likelihood-modifier)))
     (if (equal current-prefix-arg nil) (message result) (insert result))))
 
-
-;; Mythic Variations 2 Detail Check:
-
-(defun detail-check (question)
-  "Interactive function for making a DETAIL CHECK for a particular QUESTION.
-Run with a prefix argument to insert instead of echoing to the mini-buffer."
-  (interactive "sDetail Check Question: \n")
-  (let ((result "")
-	(likelihood-modifier (car(assoc mythic-chaos-factor
-				    mythic-detail-check-modifiers)))
-	(dice-result))
-    
-    (if (eq likelihood-modifier nil)
-	(setq likelihood-modifier 0))
-    (setq dice-result (max
-		       (min 18
-			    (+ (roll-dice-total 2 10) likelihood-modifier))
-		       4))
-    (setq result (format "Q: %s\nA: %s"
-			 question
-			 (cdr (assoc dice-result mythic-detail-check-table))))
-
-    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 ;; Extra meaning results
 
