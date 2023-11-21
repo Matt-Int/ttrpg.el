@@ -324,61 +324,38 @@ mini-buffer."
 
 ;; Statistics checks:
 
-(defcustom mythic-statistic-check-modifiers
-  '(("Important NPC" . 2)
-    ("Weak Attribute" . -2)
-    ("Strong Attribute" . 2)
-    ("Prime Attribute" . 4))
-  "Statsitcs Check Modifiers.  See p. 37 of Mythic Variations 2."
-  :type 'list
-  :group 'mythic)
-
-(defcustom mythic-statistic-check-table
-  '(((0  .  2) . "Very weak (-75%)")
-    ((3  .  4) . "Weak (-50%)")
-    ((5  .  6) . "Less (-10%)")
-    ((7  . 11) . "Expected Baseline")
-    ((12 . 14) . "More (+10%)")
-    ((15 . 16) . "Strong (+50%)")
-    ((17 . 18) . "Very Strong (+100%)")
-    ((19 . 20) . "PC Baseline")
-    ((21 . 22) . "PC Mode (+10%)")
-    ((23 . 24) . "PC Strong (+50%)")
-    ((25 . 26) . "PC Very Strong (+100%)"))
-  "Statisitc Check Table.  See page 37 in Mythic Variations 2."
-  :type 'list
-  :group 'mythic)
-
-(defun mythic-statistic--check (npc-modifier)
-  "Rolls on the `mythic-statistic-check-table' with the NPC-MODIFIER."
-  (let ((dice-roll (roll-dice-total 2 10))
-	(lookup)
+(defun mythic-statistic--check (expected)
+  "Roll a fate question and modify EXPECTED stats accordingly.
+See p.127 in Mythic 2nd Edition"
+  (let ((answer (chaos-roll mythic-chaos-factor 0))
 	(result))
+      (cond ((and (string-match-p "Yes" answer) (not (string-match-p "Exceptional" answer))) (setq result expected))
+	    ((and (string-match-p "No" answer) (not (string-match-p "Exceptional" answer))) (setq expected (* expected 0.75)))
+	    ((string-match-p "\\(Yes\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 1.25)))
+	    ((string-match-p "\\(No\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 0.5))))
+      (if (string-match-p "Random Event" answer)
+	  (setq result (format "%s (Special Condition)" expected))
+	(setq result (format "%s" expected)))
+      result
+      )
+  )
 
-    (setq lookup (+ npc-modifier dice-roll))
-    (setq result (seq-filter #'(lambda (item)
-				 (and (<= (car (car item)) lookup)
-				      (>= (cdr (car item)) lookup)))
-			     mythic-statistic-check-table))
-    (cdr (car result))))
-
-(defun mythic-statistic-check (actor attribute &optional npc-modifier insert)
+(defun mythic-statistic-check (actor attribute expected &optional insert)
   "Interactive function to make a statistics check for ACTOR's ATTRIBUTE.
-NPC-MODIFIER is the net modifier from `mythic-statistic-check-modifiers'.
+Depending on results it will be what is EXPECTED, stronger or weaker.
 If INSERT is t then insert at current point instead of to minibuffer."
-  (interactive "sActor: \nsAttribute: \nn Net modifiers: ")
+  (interactive "sActor: \nsAttribute: \nnExpected: ")
   (let ((result))
     (setq result
 	  (format "%s's %s is %s"
-		  actor attribute (mythic-statistic--check
-				  (if (numberp npc-modifier) npc-modifier 0))))
+		  actor attribute (mythic-statistic--check expected)))
     (if insert (insert result) (message result))))
     
-(defun mythic-statistic-check-insert (actor attribute &optional npc-modifier)
+(defun mythic-statistic-check-insert (actor attribute expected)
   "Wraps `mythic-statistic-check' with INSERT as t.
-ACTOR, ATTRIBUTE, and NPC-MODIFIER are passed to the parent function."
+ACTOR, ATTRIBUTE, and EXPECTED are passed to the parent function."
   (interactive "sActor: \nsAttribute: \nn Net modifiers: ")
-  (mythic-statistic-check actor attribute npc-modifier t))
+  (mythic-statistic-check actor attribute expected t))
 
 
 ;; Success rolls:
