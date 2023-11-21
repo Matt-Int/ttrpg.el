@@ -280,9 +280,12 @@ ACTOR, ATTRIBUTE, and EXPECTED are passed to the parent function."
 ;; Success rolls:
 
 (defun ttrpg-roll-under-p (target n-dice n-sides)
-  "Check if a dice roll with N-DICE and N-SIDES was under or eq to a TARGET."
+  "Check if a dice roll with N-DICE and N-SIDES was under or equal to a TARGET."
   (<= (roll-dice-total n-dice n-sides)))
 
+(defun ttrpg-roll-over-p (target n-dice n-sides)
+  "Check if a dice roll with N-DICE and N-SIDES was over or equal to a TARGET."
+  (>= (roll-dice-total n-dice n-sides)))
 
 ;; UNE:
 
