@@ -41,7 +41,8 @@ See p. 6 of Mythic Variations 2."
 					 ("Impossible"      . -8))
   "Sets the modifiers for the various likelihoods."
   :group 'mythic
-  :type 'list)
+  :type '(alist :key-type (string :tag "Label")
+		:value-type (number :tag "Modifier")))
 
 (defcustom mythic-detail-check-table '((4 . "Anger")
 				       (5 . "Sadness")
@@ -59,13 +60,15 @@ See p. 6 of Mythic Variations 2."
 				       (17 . "Happiness")
 				       (18 . "Calm"))
   "A DETAIL CHECK table.  See page 11 of Mythic Variations 2."
-  :type 'list
+  :type '(alist :key-type (number :tag "Die result")
+		:value-type (string :tag "Answer"))
   :group 'mythic)
 
 (defcustom mythic-detail-check-modifiers '((3 . 2)
 					   (6 . -2))
   "Modifiers to apply when the `mythic-chaos-factor' matches the CAR."
-  :type 'list
+  :type '(alist :key-type (number :tag "Chaos Factor")
+		:value-type (number :tag "Modifier"))
   :group 'mythic)
 
 (defcustom mythic-meaning-table-descriptions
@@ -196,7 +199,9 @@ Value should be a cons of two lists with the CAR matching action table
   "Event focus table, CAR is the range, CDR is the focus of the event.
 See page 19 in Mythic Variations 2"
   :group 'mythic
-  :type '(cons (cons integer integer) string))
+  :type '(alist :key-type (alist :key-type (number :tag "min")
+				 :value-type (number :tag "max"))
+		:value-type (string :tag "Event")))
 
 (defun mythic-fate-check-modifier-options ()
   "Gets the options from `mythic-fate-check-modifiers'.
