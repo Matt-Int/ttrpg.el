@@ -568,5 +568,10 @@ ACTOR, ATTRIBUTE, and NPC-MODIFIER are passed to the parent function."
   "Check if a dice roll with N-DICE and N-SIDES was under or eq to a TARGET."
   (<= (roll-dice-total n-dice n-sides)))
 
+
+;; UNE:
+
+;;; TODO: put UNE mechanics here
+  
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
