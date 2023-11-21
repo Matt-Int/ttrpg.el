@@ -562,5 +562,11 @@ ACTOR, ATTRIBUTE, and NPC-MODIFIER are passed to the parent function."
   (mythic-statistic-check actor attribute npc-modifier t))
 
 
+;; Success rolls:
+
+(defun ttrpg-roll-under-p (target n-dice n-sides)
+  "Check if a dice roll with N-DICE and N-SIDES was under or eq to a TARGET."
+  (<= (roll-dice-total n-dice n-sides)))
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
