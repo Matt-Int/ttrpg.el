@@ -230,6 +230,12 @@ It also resets to the minimum in case it has somehow gone beyond the min."
 			 (<= (car (car item)) dice-roll)))
 		mythic-event-focus-table)))
 
+(defun event--test ()
+  "Test the expected scene.  See page 67 in Mythic 2nd Edition."
+  (let ((die-roll (roll-die 10))
+	(result "Expected Scene"))
+  )
+
 (defun event-check ()
   "Interactive function for making an EVENT CHECK.
 Call with a prefix to insert at point instead of echoing to the
