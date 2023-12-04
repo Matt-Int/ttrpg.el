@@ -256,9 +256,11 @@ See p.127 in Mythic 2nd Edition"
 	(result))
     (cond
      ((and (string-match-p "Yes" answer)
-	   (not (string-match-p "Exceptional" answer))) (setq result expected))
+	   (not (string-match-p "Exceptional" answer)))
+      (setq result expected))
      ((and (string-match-p "No" answer)
-	   (not (string-match-p "Exceptional" answer))) (setq expected (* expected 0.75)))
+	   (not (string-match-p "Exceptional" answer)))
+      (setq expected (* expected 0.75)))
      ((string-match-p "\\(Yes\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 1.25)))
      ((string-match-p "\\(No\\)\\(.*Exceptional\\)\\(.*Random Event\\)?" answer) (setq expected (* expected 0.5))))
     (if (string-match-p "Random Event" answer)
