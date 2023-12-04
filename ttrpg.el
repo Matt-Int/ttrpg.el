@@ -191,7 +191,7 @@ mini-buffer."
 		  (seq-random-elt (car (cdr (car mythic-meaning-tables))))))
     (if (equal current-prefix-arg nil) (message result) (insert result))))
 
-(defun mythic-elements (element)
+(defun mythic--elements (element)
   "Find 2 ELEMENT's from `mythic-meaning-tables-elements'."
   (let ((result))
     (setq result
@@ -200,6 +200,18 @@ mini-buffer."
 		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))
 		  (seq-random-elt
 		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))))))
+
+(defun mythic--elements-list ()
+  "List the available element tables in `mythic-meaning-tables-elements'."
+  (sort (mapcar #'(lambda (item) (car item)) mythic-meaning-tables-elements) #'string<))
+
+
+(defun mythic-elements ()
+  "Return a result from an available element table."
+  (interactive)
+  (let ((element (completing-read "Which elements table? "
+				  (mythic--elements-list))))
+    (message (mythic--elements element))))
 
 
 ;; Mythic 2nd Edition chaos factor changes:
