@@ -219,6 +219,7 @@ mini-buffer."
 (defun chaos-factor-increase ()
   "Increases the chaos factor by one unless it is at the maximum.
 It also resets it to the max in case it has somehow gone beyond the max."
+  (interactive)
   (if (> mythic-chaos-factor 8)
       (progn
 	(message "Chaos factor is already at max.")
@@ -228,6 +229,7 @@ It also resets it to the max in case it has somehow gone beyond the max."
 (defun chaos-factor-decrease ()
   "Decreases the chaos factor by one unless it is at the minimum.
 It also resets to the minimum in case it has somehow gone beyond the min."
+  (interactive)
   (if (< mythic-chaos-factor 2)
       (progn
 	(message "Chaos factor is already at min.")
