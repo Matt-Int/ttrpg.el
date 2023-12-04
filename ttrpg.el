@@ -19,7 +19,10 @@
   :group 'games)
 
 (defgroup mythic nil
-  "Mythic GM Emulator (2nd Edition)."
+  "This is based on the Mythic Game Master Emulator Second Edition by Tana Pigeon.
+It is published by Word Mill Games, and licensed for our use under the Creative
+Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license.
+Find out more at www.wordmillgames.com"
   :group 'ttrpg)
 
 (defcustom mythic-chaos-factor 5
