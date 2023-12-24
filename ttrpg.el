@@ -251,7 +251,12 @@ It also resets to the minimum in case it has somehow gone beyond the min."
   "Test the expected scene.  See page 67 in Mythic 2nd Edition."
   (let ((die-roll (roll-die 10))
 	(result "Expected Scene"))
-  )
+	(if (< die-roll mythic-chaos-factor)
+	    (if (equal (mod die-roll 2) 0)
+		(setq result "Interrupt Scene")
+	      (setq result "Altered Scene")))
+	(message "[%d] @ {%d} => %s" die-roll mythic-chaos-factor result)
+	result))
 
 (defun event-check ()
   "Interactive function for making an EVENT CHECK.
