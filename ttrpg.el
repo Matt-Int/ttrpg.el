@@ -269,7 +269,7 @@ It also resets to the minimum in case it has somehow gone beyond the min."
 
 ;; Event Checks:
 
-(defun event--test ()
+(defun mythic-scene--test ()
   "Test the expected scene.  See page 67 in Mythic 2nd Edition."
   (let ((die-roll (roll-die 10))
 	(result "Expected Scene"))
