@@ -95,6 +95,18 @@ See page 37 in Mythic 2nd Edition"
 These options are available to select when doing a FATE CHECK."
   (mapc #'(lambda (item) (car item)) mythic-fate-check-modifiers))
 
+;; Util functions for messages and logging:
+
+(defun mythic-log (format-string &rest args)
+  "Log a FORMAT-STRING using ARGS to *Mythic GME Log*."
+  (let ((result (apply #'format format-string args)))
+    (with-current-buffer (get-buffer-create "*Mythic GME Log*")
+      (insert "------------------------------------------------------\n")
+      (insert (format-time-string "%Y-%m-%d %H:%M:%S" (current-time)))
+      (insert ": ")
+      (insert result)
+      (insert "\n"))))
+
 ;; Util functions for rolling dice:
 
 (defun roll-die (n-sides)
