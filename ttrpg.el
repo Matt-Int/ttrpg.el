@@ -101,11 +101,13 @@ These options are available to select when doing a FATE CHECK."
   "Log a FORMAT-STRING using ARGS to *Mythic GME Log*."
   (let ((result (apply #'format format-string args)))
     (with-current-buffer (get-buffer-create "*Mythic GME Log*")
-      (goto-char (point-max))
-      (insert (format-time-string "%Y-%m-%d %H:%M:%S" (current-time)))
-      (insert ": ")
-      (insert result)
-      (insert "\n"))))
+      (log-view-mode)
+      (let ((buffer-read-only nil))
+	(goto-char (point-max))
+	(insert (format-time-string "%Y-%m-%d %H:%M:%S" (current-time)))
+	(insert ": ")
+	(insert result)
+	(insert "\n")))))
 
 ;; Util functions for rolling dice:
 
