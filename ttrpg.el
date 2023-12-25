@@ -156,8 +156,8 @@ See p.25-26 of Mythic 2nd Edition."
 	(setq response (concat response " + Exceptional")))
     (if (and (eq die-one die-two) (<= die-one chaos-rank))
         (setq response (concat response " + Random Event")))
-    (message "d1: %s d2: %s modifier: %s total: %s result: %s"
-	     die-one die-two roll-modifier (+ die-one die-two roll-modifier) response)
+    (mythic-log "[%s] + [%s] + {%s} = [%s] @ {%d} => %s"
+		die-one die-two roll-modifier (+ die-one die-two roll-modifier) chaos-rank response)
     response))
 
 (defun fate-check (question)
