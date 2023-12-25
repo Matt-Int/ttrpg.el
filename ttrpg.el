@@ -71,7 +71,7 @@ Description table 1 entrie, and description table 2 entries."
   :type '(alist :key-type (string :tag "Element Table")
 		:value-type (repeat (string :tag "Element"))))
 
-(defcustom mythic-event-focus-table '(((1  5)  . "Remote Event")
+(defcustom mythic-event-focus-table '(((1  5)  .  "Remote Event")
 				      ((6  10)  . "Ambiguous Event")
 				      ((11 20)  . "New NPC")
 				      ((21 40)  . "NPC Action")
