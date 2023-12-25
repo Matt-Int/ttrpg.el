@@ -169,6 +169,7 @@ mini-buffer."
 				     (mythic-fate-check-modifier-options)))
 	(result "")
 	(likelihood-modifier))
+    (mythic-log "----------START FATE QUESTION")
     (setq likelihood-modifier (cdr (assoc likelihood
 					  mythic-fate-check-modifiers)))
     (setq result
@@ -178,7 +179,11 @@ mini-buffer."
 		  (chaos-roll
 		   mythic-chaos-factor
 		   likelihood-modifier)))
-    (if (equal current-prefix-arg nil) (message result) (insert result))))
+    (if (equal current-prefix-arg nil)
+	(message result)
+      (insert result))
+    (mythic-log result)
+    (mythic-log "----------END FATE QUESTION")))
 
 
 ;; Extra meaning results
@@ -191,7 +196,10 @@ mini-buffer."
 	  (format "%s %s"
 		  (seq-random-elt (car (car (cdr mythic-meaning-tables))))
 		  (seq-random-elt (car (cdr (car (cdr mythic-meaning-tables)))))))
-    (if (equal current-prefix-arg nil) (message result) (insert result))))
+    (if (equal current-prefix-arg nil)
+	(message result)
+      (insert result))
+    (mythic-log (format "TABLE [DESCRIPTION]: %s" result))))
 
 (defun mythic-action ()
   "Return a random selection from the action part of `mythic-meaning-tables'."
@@ -201,7 +209,10 @@ mini-buffer."
 	  (format "%s %s"
 		  (seq-random-elt (car (car mythic-meaning-tables)))
 		  (seq-random-elt (car (cdr (car mythic-meaning-tables))))))
-    (if (equal current-prefix-arg nil) (message result) (insert result))))
+    (if (equal current-prefix-arg nil)
+	(message result)
+      (insert result))
+    (mythic-log (format "TABLE [ACTION]: %s" result))))
 
 (defun mythic--elements (element)
   "Find 2 ELEMENT's from `mythic-meaning-tables-elements'."
@@ -223,8 +234,11 @@ mini-buffer."
   (interactive)
   (let ((element (completing-read "Which elements table? "
 				  (mythic--elements-list))))
-    (message (mythic--elements element))))
-
+    (let ((result (mythic--elements element)))
+      (if (equal current-prefix-arg nil)
+	  (message result)
+	(insert result))
+      (mythic-log (format "ELEMENTS [%s]: %s" element result)))))
 
 ;; Mythic 2nd Edition chaos factor changes:
 
@@ -234,9 +248,11 @@ It also resets it to the max in case it has somehow gone beyond the max."
   (interactive)
   (if (> mythic-chaos-factor 8)
       (progn
-	(message "Chaos factor is already at max.")
+	(mythic-log "Chaos factor is already at max.")
 	(setq mythic-chaos-factor 9))
-    (setq mythic-chaos-factor (+ 1 mythic-chaos-factor))))
+    (progn
+      (mythic-log "CHAOS: {%d} -> {%d}" mythic-chaos-factor (+ mythic-chaos-factor 1))
+      (setq mythic-chaos-factor (+ mythic-chaos-factor 1)))))
 
 (defun chaos-factor-decrease ()
   "Decreases the chaos factor by one unless it is at the minimum.
@@ -244,9 +260,11 @@ It also resets to the minimum in case it has somehow gone beyond the min."
   (interactive)
   (if (< mythic-chaos-factor 2)
       (progn
-	(message "Chaos factor is already at min.")
+	(mythic-log "Chaos factor is already at min.")
 	(setq mythic-chaos-factor 1))
-    (setq mythic-chaos-factor (- mythic-chaos-factor 1))))
+    (progn
+      (mythic-log "CHAOS: {%d} -> {%d}" mythic-chaos-factor (- mythic-chaos-factor 1))
+      (setq mythic-chaos-factor (- mythic-chaos-factor 1)))))
 
 
 ;; Event Checks:
