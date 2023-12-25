@@ -340,6 +340,42 @@ mini-buffer."
 (defun ttrpg-roll-over-p (target n-dice n-sides)
   "Check if a dice roll with N-DICE and N-SIDES was over or equal to a TARGET."
   (>= (roll-dice-total n-dice n-sides)))
-  
+
+;; Transient Menus
+(require 'transient)
+
+(transient-define-prefix ttrpg-porcelain ()
+  "Main menu of `ttrpg.el' functionality."
+  [("d" "roll dice" ttrpg-dice)
+   ("m" "Mythic GME" ttrpg-mythic)])
+
+(transient-define-prefix ttrpg-dice ()
+  "Dice rolling."
+  [("u" "under target" tsc-suffix-wave :transient t)
+   ("o" "over target" tsc-suffix-wave)])
+
+(transient-define-prefix ttrpg-mythic ()
+  "Mythic Game Master Emulator 2nd Edition."
+  ["Mythic Information"
+   ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
+   ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
+  ["Scenes"
+   ("s c" "Test Scene" mythic-scene-test)]
+  ["NPCs"
+   ("n s" "Statistics Check" mythic-statistic-check)]
+  ["Tables"
+   ("t a" "Action Meaning" mythic-action)
+   ("t d" "Description Meaning" mythic-description)
+   ("t e" "Element Meaning" mythic-elements)]
+  ["Chaos Factor"
+  ("c +" "Increase Chaos Factor" chaos-factor-increase :transient t)
+  ("c -" "Decrease Chaos Factor" chaos-factor-decrease :transient t)
+  ("c s" "Set Chaos Factor" (lambda (user-input) (interactive "nChaos Factor: ") (setq mythic-chaos-factor user-input) )
+   :transient t)])
+
+;; Keybinds
+
+(global-set-key (kbd "C-c C-t") #'ttrpg-porcelain)
+
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
