@@ -172,7 +172,7 @@ mini-buffer."
     (setq likelihood-modifier (cdr (assoc likelihood
 					  mythic-fate-check-modifiers)))
     (setq result
-	  (format "Q: %s (%s)\nA: %s"
+	  (format "QUESTION: %s (%s) => %s"
 		  question
 		  likelihood
 		  (chaos-roll
