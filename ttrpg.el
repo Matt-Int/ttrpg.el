@@ -101,6 +101,7 @@ These options are available to select when doing a FATE CHECK."
   "Log a FORMAT-STRING using ARGS to *Mythic GME Log*."
   (let ((result (apply #'format format-string args)))
     (with-current-buffer (get-buffer-create "*Mythic GME Log*")
+      (goto-char (point-max))
       (insert "------------------------------------------------------\n")
       (insert (format-time-string "%Y-%m-%d %H:%M:%S" (current-time)))
       (insert ": ")
