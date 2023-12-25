@@ -273,20 +273,23 @@ It also resets to the minimum in case it has somehow gone beyond the min."
   "Test the expected scene.  See page 67 in Mythic 2nd Edition."
   (let ((die-roll (roll-die 10))
 	(result "Expected Scene"))
-	(if (< die-roll mythic-chaos-factor)
-	    (if (equal (mod die-roll 2) 0)
-		(setq result "Interrupt Scene")
-	      (setq result "Altered Scene")))
-	(message "[%d] @ {%d} => %s" die-roll mythic-chaos-factor result)
-	result))
+    (if (< die-roll mythic-chaos-factor)
+	(if (equal (mod die-roll 2) 0)
+	    (setq result "Interrupt Scene")
+	  (setq result "Altered Scene")))
+    (mythic-log "SCENE TEST: [%d] @ {%d} => %s" die-roll mythic-chaos-factor result)
+    result))
 
+(defun mythic-scene-test ()
+  "Interactive function for testing the next scene.
+Run with a prefix argument to insert at point instead of echoing to the
 mini-buffer."
   (interactive)
-  (let ((result ""))
-    (setq result (format "Event Focus: *%s*"
-			 (cdr (car (event--check)))))
+  (let ((result (mythic-scene--test)))
+    (if (equal current-prefix-arg nil)
+	(message result)
+      (insert result))))
 
-    (if (equal current-prefix-arg nil) (message result) (insert result))))
 
 ;; Statistics checks:
 
@@ -309,24 +312,23 @@ See p.127 in Mythic 2nd Edition"
       (setq result (format "%s" expected)))
     result))
 
-(defun mythic-statistic-check (actor attribute expected &optional insert)
+(defun mythic-statistic-check (actor attribute expected)
   "Interactive function to make a statistics check for ACTOR's ATTRIBUTE.
 Depending on results it will be what is EXPECTED, stronger or weaker.
-If INSERT is t then insert at current point instead of to minibuffer."
+Run with a prefix argument to insert at point instead of echoing to the
+mini-buffer."
   (interactive "sActor: \nsAttribute: \nnExpected: ")
+  (mythic-log "----------START STATISTICS CHECK")
   (let ((result))
     (setq result
 	  (format "%s's %s is %s"
 		  actor attribute (mythic-statistic--check expected)))
-    (if insert (insert result) (message result))))
+    (if (equal current-prefix-arg nil)
+	(message result)
+      (insert result))
+    (mythic-log "STATISTICS: %s" result))
+  (mythic-log "----------END STATISTICS CHECK"))
     
-(defun mythic-statistic-check-insert (actor attribute expected)
-  "Wraps `mythic-statistic-check' with INSERT as t.
-ACTOR, ATTRIBUTE, and EXPECTED are passed to the parent function."
-  (interactive "sActor: \nsAttribute: \nn Net modifiers: ")
-  (mythic-statistic-check actor attribute expected t))
-
-
 ;; Success rolls:
 
 (defun ttrpg-roll-under-p (target n-dice n-sides)
