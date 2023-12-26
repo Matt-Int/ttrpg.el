@@ -110,9 +110,22 @@ These options are available to select when doing a FATE CHECK."
   "The directory where adventures will be stored."
   :type 'directory)
 
-(defun mythic-adventure-new ()
-  "Create a new adventure with a random uuid `org-id-uuid'."
-  (let ((uuid (org-id-uuid)))))
+(defun mythic-adventure-new (name)
+  "Create a new adventure with with a specified NAME."
+  (interactive "sName of Adventure: ")
+  (let ((adventure-dir (format "%s/%s" mythic-adventure-directory name))
+	(default-files '("adventure.log" "lists-npcs.org" "lists-threads.org" "scenes.org")))
+    (if (make-directory adventure-dir t)
+	(message "An adventure with that name already exists.")
+      (setq mythic-adventure-current name)
+      (mapc #'(lambda (file)
+		(write-region "" nil (format "%s/%s" adventure-dir file)))
+		default-files)
+    )))
+
+(defun mythic-adventure--list ()
+  "List all of the current adventures in `mythic-adventure-directory'."
+  (cdr (cdr (directory-files mythic-adventure-directory))))
 
 ;; Util functions for messages and logging:
 
