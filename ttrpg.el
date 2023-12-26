@@ -135,6 +135,39 @@ These options are available to select when doing a FATE CHECK."
     (mythic-log "Changing adventure to: '%s'" adventure)
     (setq mythic-adventure-current adventure)))
 
+(defun mythic-adventure--list (file)
+  "Get the headers from the FILE list.
+File should be either `npcs' or `threads'."
+  (let ((file (format "%s/%s/lists-%s.org"
+			  mythic-adventure-directory
+			  mythic-adventure-current
+			  file)))
+    (with-temp-buffer
+      (goto-char (point-min))
+      (insert-file-contents file)
+      (mapcan #'(lambda (item) (split-string item "*" t " "))
+	      (seq-filter #'(lambda (line) (string-match-p "^\\*" line))
+			  (split-string (buffer-string) "\n" t))))))
+
+(defun mythic-adventure-list-get ()
+  "Return a random selection from an adventure list."
+  (interactive)
+  (let ((list-type (completing-read "Which list? " '("npcs" "threads"))))
+    (if (mythic-adventure--list list-type)
+	(let ((selection (seq-random-elt (mythic-adventure--list list-type))))
+	  (message "%s" selection)
+	  selection)
+      (mythic-log "%s list is empty" list-type))))
+
+(defun mythic-adventure-list-open ()
+  "Opens one of the corresponding adventure lists depending on user selection."
+  (interactive)
+  (let ((list-type (completing-read "Which list? " '("npcs" "threads"))))
+    (find-file (format "%s/%s/lists-%s.org"
+		       mythic-adventure-directory
+		       mythic-adventure-current
+		       list-type))))
+
 ;; Util functions for messages and logging:
 
 (defun mythic-log (format-string &rest args)
