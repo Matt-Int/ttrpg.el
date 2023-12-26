@@ -160,6 +160,14 @@ File should be either `npcs' or `threads'."
 	  selection)
       (mythic-log "%s list is empty" list-type))))
 
+(defun mythic-adventure-list--get (list-type)
+  "Return a random selection from the LIST-TYPE adventure list."
+  (if (mythic-adventure--list list-type)
+      (let ((selection (seq-random-elt (mythic-adventure--list list-type))))
+	(message "%s" selection)
+	selection)
+    (mythic-log "%s list is empty" list-type)))
+
 (defun mythic-adventure-list-open ()
   "Opens one of the corresponding adventure lists depending on user selection."
   (interactive)
