@@ -400,7 +400,7 @@ mini-buffer."
   ["Chaos Factor"
   ("c +" "Increase Chaos Factor" chaos-factor-increase :transient t)
   ("c -" "Decrease Chaos Factor" chaos-factor-decrease :transient t)
-  ("c s" "Set Chaos Factor" (lambda (user-input) (interactive "nChaos Factor: ") (setq mythic-chaos-factor user-input) )
+  ("c s" "Set Chaos Factor" (lambda (user-input) (interactive "nChaos Factor: ") (setq mythic-chaos-factor user-input))
    :transient t)])
 
 ;; Keybinds
