@@ -457,7 +457,7 @@ mini-buffer."
   ["Mythic Information"
    ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
    ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
-  ["Adventure"]
+  [["Adventure"
     ("" (lambda () (format "'%s'" mythic-adventure-current))
      (lambda () (interactive) (mythic-log mythic-adventure-current)))
    ("a n" "New adventure" mythic-adventure-new)
@@ -467,7 +467,7 @@ mini-buffer."
   ["Scenes"
    ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
    ("s t" "Test Scene" mythic-scene-test)
-   ("s e" "End Scene" mythic-scene-end)]
+   ("s e" "End Scene" mythic-scene-end)]]
   ["NPCs"
    ("n s" "Statistics Check" mythic-statistic-check)]
   ["Tables"
