@@ -388,7 +388,7 @@ mini-buffer."
    ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
    ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
   ["Scenes"
-   ("s c" "Test Scene" mythic-scene-test)]
+   ("s t" "Test Scene" mythic-scene-test)
   ["NPCs"
    ("n s" "Statistics Check" mythic-statistic-check)]
   ["Tables"
