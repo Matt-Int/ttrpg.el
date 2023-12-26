@@ -120,7 +120,8 @@ These options are available to select when doing a FATE CHECK."
       (setq mythic-adventure-current name)
       (mapc #'(lambda (file)
 		(write-region "" nil (format "%s/%s" adventure-dir file)))
-		default-files)
+	    default-files)
+      (mythic-log "Creating new adventure: '%s'" name)
     )))
 
 (defun mythic-adventure--list-choices ()
