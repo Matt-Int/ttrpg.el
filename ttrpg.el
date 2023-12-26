@@ -133,11 +133,15 @@ These options are available to select when doing a FATE CHECK."
   "Log a FORMAT-STRING using ARGS to *Mythic GME Log* and the adventure's log file."
   (let ((result (apply #'format format-string args)))
     (unless (not mythic-adventure-current)
-      (with-current-buffer (get-buffer-create (format "%s/%s/adventure.log"
-						      mythic-adventure-directory
-						      mythic-adventure-current))
+      (with-temp-file (format "%s/%s/adventure.log"
+			      mythic-adventure-directory
+			      mythic-adventure-current)
 	(log-view-mode)
 	(let ((buffer-read-only nil))
+	  (goto-char (point-min))
+	  (insert-file-contents (format "%s/%s/adventure.log"
+					mythic-adventure-directory
+					mythic-adventure-current))
 	  (goto-char (point-max))
 	  (insert (format-time-string "%Y-%m-%d %H:%M:%S" (current-time)))
 	  (insert ": ")
