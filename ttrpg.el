@@ -95,6 +95,25 @@ See page 37 in Mythic 2nd Edition"
 These options are available to select when doing a FATE CHECK."
   (mapc #'(lambda (item) (car item)) mythic-fate-check-modifiers))
 
+;; Mythic Adventures
+
+(defgroup mythic-adventure nil
+  "Options related to Adventures run using Mythic GME."
+  :group 'mythic)
+
+(defcustom mythic-adventure-current nil
+  "The ID of the current adventure."
+  :group 'mythic-adventure
+  :type 'string)
+
+(defcustom mythic-adventure-directory (expand-file-name "var/mythic/adventures" user-emacs-directory)
+  "The directory where adventures will be stored."
+  :type 'directory)
+
+(defun mythic-adventure-new ()
+  "Create a new adventure with a random uuid `org-id-uuid'."
+  (let ((uuid (org-id-uuid)))))
+
 ;; Util functions for messages and logging:
 
 (defun mythic-log (format-string &rest args)
