@@ -311,6 +311,15 @@ mini-buffer."
 	(message result)
       (insert result))))
 
+(defun mythic-scene-end ()
+  "Interactive function for ending a scene."
+  (interactive)
+  (let ((chaos-decrease (y-or-n-p "Were you in control in this scene?")))
+    (if chaos-decrease
+	(chaos-factor-decrease)
+      (chaos-factor-increase)))
+  )
+
 
 ;; Statistics checks:
 
