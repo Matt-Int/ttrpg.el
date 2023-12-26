@@ -127,6 +127,14 @@ These options are available to select when doing a FATE CHECK."
   "List all of the current adventures in `mythic-adventure-directory'."
   (cdr (cdr (directory-files mythic-adventure-directory))))
 
+(defun mythic-adventure-pick ()
+    "Pick an adventure and make it the active one."
+  (interactive)
+  (let ((adventure (completing-read "Adventure: " (mythic-adventure--list))))
+    (setq mythic-adventure-current nil)
+    (mythic-log "Changing adventure to: '%s'" adventure)
+    (setq mythic-adventure-current adventure)))
+
 ;; Util functions for messages and logging:
 
 (defun mythic-log (format-string &rest args)
