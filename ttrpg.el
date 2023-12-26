@@ -387,6 +387,7 @@ mini-buffer."
   ["Mythic Information"
    ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
    ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
+  ["Adventure"]
   ["Scenes"
    ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
    ("s t" "Test Scene" mythic-scene-test)
