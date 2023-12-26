@@ -474,7 +474,9 @@ mini-buffer."
 								      mythic-adventure-directory
 								      mythic-adventure-current))))]
    ["Lists"
-    ("a l n" "NPCs List" (lambda () (interactive) (mythic-adventure-list--get "npcs")))]
+    ("a l n" "NPCs List" (lambda () (interactive) (mythic-adventure-list--get "npcs")))
+    ("a l t" "Threads List" (lambda () (interactive) (mythic-adventure-list--get "threads")))
+    ("a l O" "Open List" mythic-adventure-list-open)]
   ["Scenes"
    ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
    ("s t" "Test Scene" mythic-scene-test)
