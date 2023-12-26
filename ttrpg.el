@@ -469,7 +469,10 @@ mini-buffer."
     ("" (lambda () (format "'%s'" mythic-adventure-current))
      (lambda () (interactive) (mythic-log mythic-adventure-current)))
    ("a n" "New adventure" mythic-adventure-new)
-   ("a c" "Choose adventure" mythic-adventure-pick)]
+   ("a c" "Choose adventure" mythic-adventure-pick)
+   ("a L" "Open adventure log" (lambda () (interactive) (find-file (format "%s/%s/adventure.log"
+								      mythic-adventure-directory
+								      mythic-adventure-current))))]
    ["Lists"
     ("a l n" "NPCs List" (lambda () (interactive) (mythic-adventure-list--get "npcs")))]
   ["Scenes"
