@@ -458,6 +458,12 @@ mini-buffer."
    ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
    ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
   ["Adventure"]
+    ("" (lambda () (format "'%s'" mythic-adventure-current))
+     (lambda () (interactive) (mythic-log mythic-adventure-current)))
+   ("a n" "New adventure" mythic-adventure-new)
+   ("a c" "Choose adventure" mythic-adventure-pick)]
+   ["Lists"
+    ("a l n" "NPCs List" (lambda () (interactive) (mythic-adventure-list--get "npcs")))]
   ["Scenes"
    ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
    ("s t" "Test Scene" mythic-scene-test)
