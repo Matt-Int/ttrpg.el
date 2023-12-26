@@ -378,9 +378,9 @@ mini-buffer."
    ("m" "Mythic GME" ttrpg-mythic)])
 
 (transient-define-prefix ttrpg-dice ()
-  "Dice rolling."
-  [("u" "under target" tsc-suffix-wave :transient t)
-   ("o" "over target" tsc-suffix-wave)])
+  "Dice rolling [WIP]."
+  [("u" "under target" (lambda (target) (interactive "nTarget: ") (message "%s" (< (roll-dice-total 3 6) target))))
+   ("o" "over target" (lambda (target) (interactive "nTarget: ") (message "%s" (> (roll-dice-total 3 6) target))))])
 
 (transient-define-prefix ttrpg-mythic ()
   "Mythic Game Master Emulator 2nd Edition."
