@@ -470,7 +470,26 @@ mini-buffer."
 (transient-define-prefix ttrpg-dice ()
   "Dice rolling [WIP]."
   [("u" "under target" (lambda (target) (interactive "nTarget: ") (message "%s" (< (roll-dice-total 3 6) target))))
-   ("o" "over target" (lambda (target) (interactive "nTarget: ") (message "%s" (> (roll-dice-total 3 6) target))))])
+   ("o" "over target" (lambda (target) (interactive "nTarget: ") (message "%s" (> (roll-dice-total 3 6) target))))
+   ("d 4" "D4s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ("d 6" "D6s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ("d 8" "D8s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ("d 10" "D10s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ("d 12" "D12s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ("d 20" "D20s" (lambda () (interactive) (message "%s" (roll-dice-total
+						   (if current-prefix-arg current-prefix-arg 1)
+						   6))))
+   ])
 
 (transient-define-prefix ttrpg-mythic ()
   "Mythic Game Master Emulator 2nd Edition."
