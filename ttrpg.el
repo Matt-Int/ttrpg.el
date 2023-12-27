@@ -507,8 +507,7 @@ mini-buffer."
    :transient t)])
 
 ;; Keybinds
-
-(global-set-key (kbd "C-c C-t") #'ttrpg-porcelain)
+;; (global-set-key (kbd "C-c C-t") #'ttrpg-porcelain)
 
 (provide 'ttrpg)
 ;;; ttrpg.el ends here
