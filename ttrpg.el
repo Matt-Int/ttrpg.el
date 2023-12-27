@@ -77,7 +77,7 @@ Description table 1 entrie, and description table 2 entries."
 				      ((21 40)  . "NPC Action")
 				      ((41 45)  . "NPC Negative")
 				      ((46 50)  . "NPC Positive")
-				      ((51 55)  . "move towards a thread")
+				      ((51 55)  . "Move Towards a Thread")
 				      ((56 65)  . "Move Away From A Thread")
 				      ((66 70)  . "Close A Thread")
 				      ((71 80)  . "PC Negative")
