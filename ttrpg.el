@@ -31,8 +31,6 @@ See p. 19, 22 of Mythic GME 2nd Edition."
   :group 'mythic
   :type 'integer)
 
-(make-variable-buffer-local 'mythic-chaos-factor)
-
 (defcustom mythic-fate-check-modifiers '(("50/50"              .  0)
 					 ("Likely"             .  1)
 					 ("Unlikely"           . -1)
@@ -130,6 +128,7 @@ These options are available to select when doing a FATE CHECK."
     (if (make-directory adventure-dir t)
 	(message "An adventure with that name already exists.")
       (setq mythic-adventure-current name)
+      (setq mythic-chaos-factor 5)
       (mapc #'(lambda (file)
 		(write-region "" nil (format "%s/%s" adventure-dir file)))
 	    default-files)
@@ -146,7 +145,8 @@ These options are available to select when doing a FATE CHECK."
   (let ((adventure (completing-read "Adventure: " (mythic-adventure--list-choices))))
     (setq mythic-adventure-current nil)
     (mythic-log "Changing adventure to: '%s'" adventure)
-    (setq mythic-adventure-current adventure)))
+    (setq mythic-adventure-current adventure)
+    (message "Remember to set the Chaos Factor!")))
 
 (defun mythic-adventure--list (file)
   "Get the headers from the FILE list.
