@@ -495,7 +495,8 @@ mini-buffer."
   "Mythic Game Master Emulator 2nd Edition."
   ["Mythic Information"
    ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
-   ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))]
+   ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))
+   ("f" "Fate Check" fate-check)]
   [["Adventure"
     ("" (lambda () (format "'%s'" mythic-adventure-current))
      (lambda () (interactive) (mythic-log mythic-adventure-current)))
