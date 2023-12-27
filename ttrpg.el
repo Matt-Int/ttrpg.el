@@ -492,6 +492,7 @@ mini-buffer."
   ["Scenes"
    ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
    ("s t" "Test Scene" mythic-scene-test)
+   ("s f" "Scene Focus" mythic-event-focus)
    ("s e" "End Scene" mythic-scene-end)]]
   ["NPCs"
    ("n s" "Statistics Check" mythic-statistic-check)]
