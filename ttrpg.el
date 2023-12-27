@@ -99,9 +99,13 @@ These options are available to select when doing a FATE CHECK."
   "Return a result from the `mythic-event-focus-table'."
   (interactive)
   (let ((dice-roll (roll-die 100)))
-    (message (cdr (car (seq-filter #'(lambda (line) (between-p dice-roll (car (car line)) (car (cdr (car line)))))
-		mythic-event-focus-table)))))
-  )
+    (let ((result (cdr (car (seq-filter #'(lambda (line) (between-p dice-roll (car (car line)) (car (cdr (car line)))))
+					mythic-event-focus-table)))))
+      (if current-prefix-arg
+	  (insert result)
+	(message result))
+    (mythic-log "EVENT FOCUS: %s" result))))
+  
 
 ;; Mythic Adventures
 
