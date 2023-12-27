@@ -260,7 +260,7 @@ See p.25-26 of Mythic 2nd Edition."
         (die-two (roll-die 10))
 	(roll-modifier (+ likelihood-modifier (calc-chaos-modifier chaos-rank)))
         (response "No"))
-    (if (>= (+ die-one die-two) (+ 11 roll-modifier))
+    (if (>= (+ die-one die-two roll-modifier) 11)
         (setq response "Yes"))
     (if (or (between-p (+ die-one die-two roll-modifier) 18 20)
 	    (between-p (+ die-one die-two roll-modifier)  2  4))
