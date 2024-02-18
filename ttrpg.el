@@ -459,6 +459,19 @@ mini-buffer."
   "Check if a dice roll with N-DICE and N-SIDES was over or equal to a TARGET."
   (>= (roll-dice-total n-dice n-sides)))
 
+;; GURPS specific rolls:
+
+(defun gurps-skill-roll (skill target modifiers)
+  "Roll a 3d against a SKILL TARGET with any MODIFIERS."
+  (interactive "sSkill: \nnSL: \nnModifiers: ")
+  (let ((dice-roll (roll-dice-total 3 6)))
+    (let ((result (format "%s-%d + %d = %d [%d] {%d}"
+			  skill target modifiers (+ skill target) dice-roll
+			  (- (+ target modifiers) dice-roll))))
+      (if current-prefix-arg
+	  (insert result)
+	(message result)))))
+
 ;; Transient Menus
 (require 'transient)
 
@@ -469,7 +482,7 @@ mini-buffer."
 
 (transient-define-prefix ttrpg-dice ()
   "Dice rolling [WIP]."
-  [("u" "under target" (lambda (target) (interactive "nTarget: ") (message "%s" (< (roll-dice-total 3 6) target))))
+  [("g s" "GURPS Skill Roll" gurps-skill-roll)
    ("o" "over target" (lambda (target) (interactive "nTarget: ") (message "%s" (> (roll-dice-total 3 6) target))))
    ("d 4" "D4s" (lambda () (interactive) (message "%s" (roll-dice-total
 						   (if current-prefix-arg current-prefix-arg 1)
