@@ -245,7 +245,7 @@ File should be either `npcs' or `threads'."
 (defun read-random-line-file (filename)
   "Read a random line from FILENAME."
   (with-temp-buffer
-    (insert-file-contents "~/Downloads/test.txt")
+    (insert-file-contents filename)
     (let ((lines (car (page--count-lines-page))))
       (forward-line (+ (random (- lines 1)) 1))
       (buffer-substring-no-properties (line-beginning-position) (line-end-position)))))
