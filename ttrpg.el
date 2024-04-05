@@ -25,7 +25,7 @@ Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license.
 Find out more at www.wordmillgames.com"
   :group 'ttrpg)
 
-(defcustom mythic-chaos-factor 5
+(defcustom mythic-chaos-factor nil
   "The chaos factor that influences fate checks.  Should be between 1 and 9.
 See p. 19, 22 of Mythic GME 2nd Edition."
   :group 'mythic
@@ -303,7 +303,12 @@ mini-buffer."
 		  question
 		  likelihood
 		  (chaos-roll
-		   mythic-chaos-factor
+		   (if (eq mythic-chaos-factor nil)
+		       (string-to-number (completing-read
+			"What is the chaos factor?"
+			'("1" "2" "3" "4" "5" "6"
+			  "7" "8" "9")))
+		     mythic-chaos-factor)
 		   likelihood-modifier)))
     (if (equal current-prefix-arg nil)
 	(message result)
