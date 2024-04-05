@@ -304,10 +304,11 @@ mini-buffer."
 		  likelihood
 		  (chaos-roll
 		   (if (eq mythic-chaos-factor nil)
-		       (string-to-number (completing-read
-			"What is the chaos factor?"
-			'("1" "2" "3" "4" "5" "6"
-			  "7" "8" "9")))
+		       (string-to-number (read-answer
+			"What is the chaos factor? "
+			'(("1" ?1) ("2" ?2) ("3" ?3)
+			  ("4" ?4) ("5" ?5) ("6" ?6)
+			  ("7" ?7) ("8" ?8) ("9" ?9))))
 		     mythic-chaos-factor)
 		   likelihood-modifier)))
     (if (equal current-prefix-arg nil)
