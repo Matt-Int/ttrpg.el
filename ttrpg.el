@@ -321,8 +321,9 @@ mini-buffer."
 ;; Extra meaning results
 
 (defun mythic-description ()
-  "Return a random selection from 'descriptions1.txt' and 'descriptions2.txt'.
-These files should be located in the directory specified in `mythic-tables-directory'"
+  "Return random from \"descriptions1.txt\" and \"descriptions2.txt\".
+These files should be located in the directory specified in
+`mythic-tables-directory'"
   (interactive)
   (let ((result)
 	(file-1 (expand-file-name "description1.txt" mythic-tables-directory))
