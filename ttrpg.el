@@ -235,6 +235,16 @@ File should be either `npcs' or `threads'."
   "Rolls N-DICE with N-SIDES and sums the result."
   (seq-reduce #'+ (roll-dice n-dice n-sides) 0))
 
+;; Util functions for reading random entries from a file
+
+(defun read-random-line-file (filename)
+  "Read a random line from FILENAME."
+  (with-temp-buffer
+    (insert-file-contents "~/Downloads/test.txt")
+    (let ((lines (car (page--count-lines-page))))
+      (forward-line (+ (random (- lines 1)) 1))
+      (buffer-substring-no-properties (line-beginning-position) (line-end-position)))))
+
 ;; Mythic 2nd Edition Fate Check:
 
 (defun between-p (number low high)
