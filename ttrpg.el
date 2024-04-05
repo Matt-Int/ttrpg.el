@@ -315,13 +315,16 @@ mini-buffer."
 ;; Extra meaning results
 
 (defun mythic-description ()
-  "Return a random selection from the description part of `mythic-meaning-tables'."
+  "Return a random selection from 'descriptions1.txt' and 'descriptions2.txt'.
+These files should be located in the directory specified in `mythic-tables-directory'"
   (interactive)
-  (let ((result))
+  (let ((result)
+	(file-1 (expand-file-name "description1.txt" mythic-tables-directory))
+	(file-2 (expand-file-name "description2.txt" mythic-tables-directory)))
     (setq result
 	  (format "%s %s"
-		  (seq-random-elt (car (car (cdr mythic-meaning-tables))))
-		  (seq-random-elt (car (cdr (car (cdr mythic-meaning-tables)))))))
+		  (read-random-line-file file-1)
+		  (read-random-line-file file-2)))
     (if (equal current-prefix-arg nil)
 	(message result)
       (insert result))
@@ -330,11 +333,13 @@ mini-buffer."
 (defun mythic-action ()
   "Return a random selection from the action part of `mythic-meaning-tables'."
   (interactive)
-  (let ((result))
+  (let ((result)
+	(file-1 (expand-file-name "action1.txt" mythic-tables-directory))
+	(file-2 (expand-file-name "action2.txt" mythic-tables-directory)))
     (setq result
 	  (format "%s %s"
-		  (seq-random-elt (car (car mythic-meaning-tables)))
-		  (seq-random-elt (car (cdr (car mythic-meaning-tables))))))
+		  (read-random-line-file file-1)
+		  (read-random-line-file file-2)))
     (if (equal current-prefix-arg nil)
 	(message result)
       (insert result))
