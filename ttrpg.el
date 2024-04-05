@@ -353,19 +353,19 @@ These files should be located in the directory specified in
     (mythic-log (format "TABLE [ACTION]: %s" result))))
 
 (defun mythic--elements (element)
-  "Find 2 ELEMENT's from `mythic-meaning-tables-elements'."
+  "Find 2 ELEMENT's from the \"meaning-tables\" directory.
+Located in `mythic-tables-directory'."
   (let ((result))
-    (setq result
-	  (format "%s %s"
-		  (seq-random-elt
-		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))
-		  (seq-random-elt
-		   (cdr (car (seq-filter #'(lambda (item) (equal (car item) element)) mythic-meaning-tables-elements))))))))
+    (let ((result)
+	  (file (expand-file-name element (expand-file-name "meaning-tables/" mythic-tables-directory))))
+      (setq result
+	    (format "%s %s"
+		    (read-random-line-file file)
+		    (read-random-line-file file))))))
 
 (defun mythic--elements-list ()
   "List the available element tables in `mythic-meaning-tables-elements'."
-  (sort (mapcar #'(lambda (item) (car item)) mythic-meaning-tables-elements) #'string<))
-
+  (directory-files (expand-file-name "meaning-tables/" mythic-tables-directory) nil "txt" t))
 
 (defun mythic-elements ()
   "Return a result from an available element table."
