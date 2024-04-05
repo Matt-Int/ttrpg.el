@@ -46,6 +46,11 @@ See p.26 of Mythic GME 2nd Edition."
   :type '(alist :key-type (string :tag "Label")
 		:value-type (number :tag "Modifier")))
 
+(defcustom mythic-tables-directory (expand-file-name "var/ttrpg.el/mythic/tables" user-emacs-directory)
+  "Directory where ttrpg.el looks for action, description, and elements tables."
+  :group 'mythic
+  :type 'directory)
+
 (defcustom mythic-meaning-tables '((("Result 1a" "Result 2a")
 				    ("Result 3a" "Result 4a"))
 				   (("Result 1d" "Result 2d")
