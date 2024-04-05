@@ -41,7 +41,7 @@ See p. 19, 22 of Mythic GME 2nd Edition."
 					 ("Certain"            .  5)
 					 ("Impossible"         . -5))
   "Sets the modifiers for the various likelihoods.
-See p.26 of Mythic GME 2nd Edition."
+See p.26 of Mythic GME 2nd Edition for modifiers and p.20 for odds examples."
   :group 'mythic
   :type '(alist :key-type (string :tag "Label")
 		:value-type (number :tag "Modifier")))
