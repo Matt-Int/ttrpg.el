@@ -1,4 +1,4 @@
-;; ttrpg.el --- Roll dice and use Mythic GM Emulator functionality
+;; ttrpg.el --- Roll dice and other utility functions for general ttrpg-ing.
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games
