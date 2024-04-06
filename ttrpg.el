@@ -247,7 +247,7 @@ File should be either `npcs' or `threads'."
   (with-temp-buffer
     (insert-file-contents filename)
     (let ((lines (car (page--count-lines-page))))
-      (forward-line (+ (random (- lines 1)) 1))
+      (forward-line (random (- lines 1)))
       (buffer-substring-no-properties (line-beginning-position) (line-end-position)))))
 
 ;; Mythic 2nd Edition Fate Check:
