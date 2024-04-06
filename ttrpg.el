@@ -493,7 +493,7 @@ mini-buffer."
   (interactive "sSkill: \nnSL: \nnModifiers: ")
   (let ((dice-roll (roll-dice-total 3 6)))
     (let ((result (format "%s-%d + %d = %d [%d] {%d}"
-			  skill target modifiers (+ skill target) dice-roll
+			  skill target modifiers (+ modifiers target) dice-roll
 			  (- (+ target modifiers) dice-roll))))
       (if current-prefix-arg
 	  (insert result)
