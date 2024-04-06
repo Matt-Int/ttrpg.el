@@ -4,13 +4,15 @@
 ;; Keywords: ttrpg games
 ;; Version 0.1.0
 ;; URL: <todo: include url>
-;; Package-Requires: ((emacs "29.0.50"))
+;; Package-Requires: ((emacs "29.0.50") (cl-lib))
 
 ;;; Commentary:
 
 ;; Provides a set of helper functions for running solo-ttrpg games
 
 ;;; Code:
+
+(require 'cl-lib)
 
 ;; Config and customisations:
 
@@ -35,6 +37,41 @@
 (defun roll-dice-total (n-dice n-sides)
   "Rolls N-DICE with N-SIDES and sums the result."
   (seq-reduce #'+ (roll-dice n-dice n-sides) 0))
+
+;; Dice notation parser
+
+(defun parse-dice-notation--simple (notation)
+  "Parse a standard AdY NOTATION and use `roll-dice-total'."
+  (let ((sides (mapcar #'string-to-number (string-split notation "d"))))
+    (roll-dice-total (car sides) (car (cdr sides)))))
+
+(parse-dice-notation--simple "2d10")
+
+(defun parse-dice-notation (notation)
+  "Parse standard AdY + C NOTATION and call appropriate functions."
+  (save-match-data
+    (let ((result notation))
+      (while (string-match "\\([0-9]+d[0-9]+\\)" result)
+	(let ((match (match-string 1 result)))
+	  (setq result (replace-regexp-in-string match (number-to-string
+							 (parse-dice-notation--simple match))
+						 result nil nil nil)))
+	)
+      (string-to-number (calc-eval result)))))
+
+
+(parse-dice-notation "2d20 + 1d10")
+
+(defun dice-roll (notation)
+  "Evaluate a dice NOTATION."
+  (interactive "sDice Notation: ")
+  (let ((result (parse-dice-notation notation)))
+    (if current-prefix-arg
+	(insert (format "%s → %d" notation result)))
+    (message "%s → %d" notation result)
+    ))
+
+
 
 ;; Util functions for reading random entries from a file
 
