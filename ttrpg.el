@@ -71,8 +71,6 @@
     (message "%s → %d" notation result)
     ))
 
-
-
 ;; Util functions for reading random entries from a file
 
 (defun read-random-line-file (filename)
