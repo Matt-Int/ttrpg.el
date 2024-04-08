@@ -12,6 +12,8 @@
 
 ;;; Code:
 
+(require 'mythic)
+
 (defgroup mythic-adventure nil
   "Options related to Adventures run using Mythic GME."
   :group 'mythic)

@@ -12,6 +12,8 @@
 
 ;;; Code:
 
+(require 'ttrpg)
+
 (defgroup mythic nil
   "This is based on the Mythic Game Master Emulator Second Edition by Tana Pigeon.
 It is published by Word Mill Games, and licensed for our use under the Creative

@@ -12,6 +12,9 @@
 
 ;;; Code:
 
+(require 'ttrpg)
+(require 'transient)
+
 (transient-define-prefix ttrpg-porcelain ()
   "Main menu of `ttrpg.el' functionality."
   [("d" "roll dice" ttrpg-dice)

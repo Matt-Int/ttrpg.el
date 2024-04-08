@@ -14,6 +14,8 @@
 
 ;; GURPS specific rolls:
 
+(require 'ttrpg)
+
 (defun gurps-skill-roll (skill target modifiers)
   "Roll a 3d against a SKILL TARGET with any MODIFIERS."
   (interactive "sSkill: \nnSL: \nnModifiers: ")
