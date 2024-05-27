@@ -45,8 +45,6 @@
   (let ((sides (mapcar #'string-to-number (string-split notation "d"))))
     (roll-dice-total (car sides) (car (cdr sides)))))
 
-(parse-dice-notation--simple "2d10")
-
 (defun parse-dice-notation (notation)
   "Parse standard AdY + C NOTATION and call appropriate functions."
   (save-match-data
