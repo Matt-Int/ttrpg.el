@@ -356,6 +356,39 @@ mini-buffer."
     (mythic-log "STATISTICS: %s" result))
   (mythic-log "----------END STATISTICS CHECK"))
 
+(defun mythic-character-roller ()
+  "Interactive function to roll on a number of mythic elements tables.
+Insert each roll on a new line, use `yes-or-no-p' to confirm next roll.
+Use a prefix argument to skip the confirmation."
+  (interactive)
+  (let ((continue t)
+	(results)
+	(tables '("character-descriptors.txt"
+		  "character-appearance.txt"
+		  "character-identity.txt"
+		  "character-skills.txt"
+		  "character-background.txt"
+		  "character-motivations.txt"
+		  "character-personality.txt"
+		  "character-traits-and-flaws.txt")))
+    (setq results (mapcar #'mythic--elements tables))
+    (if current-prefix-arg
+	(mapc #'insert (cl-mapcar #'(lambda (table result)
+				      (format "%s: %s\n"
+					      (car (split-string table "[\.]"))
+					      result))
+				  tables results))
+      (while continue
+	(progn (insert (car (split-string (car tables) "[\.]")))
+	       (insert ": ")
+	       (insert (car results))
+	       (setq results (cdr results))
+	       (setq tables (cdr tables))
+	       (if (eq results nil) (setq continue nil)
+		 (setq continue (y-or-n-p "Roll next? ")))
+	       (insert "\n"))))))
+  ;;(mythic--elements "character-descriptors.txt")))
+
 (provide 'mythic)
 ;;; mythic.el ends here
 
