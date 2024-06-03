@@ -57,9 +57,6 @@
 	)
       (string-to-number (calc-eval result)))))
 
-
-(parse-dice-notation "2d20 + 1d10")
-
 (defun dice-roll (notation)
   "Evaluate a dice NOTATION."
   (interactive "sDice Notation: ")

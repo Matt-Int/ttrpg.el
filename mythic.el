@@ -158,29 +158,6 @@ See p.26 of Mythic GME 2nd Edition for modifiers and p.20 for odds examples."
       (setq files (cdr files)))))
     
 
-(defcustom mythic-meaning-tables '((("Result 1a" "Result 2a")
-				    ("Result 3a" "Result 4a"))
-				   (("Result 1d" "Result 2d")
-				    ("Result 3d" "Result 4d")))
-  "Meaning Table: Descriptions & Actions from Mythic 2nd Edition.
-See page 46-47 of Mythic 2nd Edition.
-Value is a nested list in the order of Action table 1 entries,
-Action table 2 entries,
-Description table 1 entrie, and description table 2 entries."
-  :type '(list :tag "Mythic Meaning Tables"
-	  (list :tag "Actions" (repeat :tag "Table 1" (string :tag "Action"))
-		(repeat :tag "Table 2" (string :tag "Action")))
-	  (list :tag "Descriptions" (repeat :tag "Table 1" (string :tag "Description"))
-		(repeat :tag "Table 2" (string :tag "Description"))))
-  :group 'mythic)
-
-(defcustom mythic-meaning-tables-elements '(("Table Name"
-					     "Entry 1" "Entry 2"))
-  "Meaning Table: Elements from Mythic 2nd Edition, see pages 201-215."
-  :group 'mythic
-  :type '(alist :key-type (string :tag "Element Table")
-		:value-type (repeat (string :tag "Element"))))
-
 (defcustom mythic-event-focus-table '(((1  5)  .  "Remote Event")
 				      ((6  10)  . "Ambiguous Event")
 				      ((11 20)  . "New NPC")
