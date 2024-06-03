@@ -8,7 +8,11 @@
 
 ;;; Commentary:
 
-;; Provides a set of helper functions for using Mythic GME 2e
+;; Provides a set of helper functions for using Mythic GME 2e.
+;; This is based on the Mythic Game Master Emulator Second Edition by Tana Pigeon.
+;; It is published by Word Mill Games, and licensed for our use under the Creative
+;; Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license.
+;; Find out more at www.wordmillgames.com"
 
 ;;; Code:
 
