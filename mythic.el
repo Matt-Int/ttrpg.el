@@ -196,7 +196,7 @@ These options are available to select when doing a FATE CHECK."
 (defun mythic-log (format-string &rest args)
   "Log a FORMAT-STRING using ARGS to *Mythic GME Log* and the adventure's log file."
   (let ((result (apply #'format format-string args)))
-    (unless (not mythic-adventure-current)
+    (unless (if (boundp 'mythic-adventure-current) mythic-adventure-current t)
       (with-temp-file (format "%s/%s/adventure.log"
 			      mythic-adventure-directory
 			      mythic-adventure-current)
