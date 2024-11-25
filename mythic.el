@@ -55,6 +55,7 @@ See p.26 of Mythic GME 2nd Edition for modifiers and p.20 for odds examples."
 (defun mythic-tables-install ()
   "Install or update the mythic tables and put them in `mythic-tables-directory'."
   (interactive)
+  (make-directory (expand-file-name "meaning-tables/" mythic-tables-directory) t)
   (let ((urls '("https://raw.githubusercontent.com/Matt-Int/ttrpg.el/main/tables/action1.txt"
 		"https://raw.githubusercontent.com/Matt-Int/ttrpg.el/main/tables/action2.txt"
 		"https://raw.githubusercontent.com/Matt-Int/ttrpg.el/main/tables/description1.txt"
