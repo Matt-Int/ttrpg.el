@@ -34,7 +34,7 @@
 	`(,(format "#+title: %s" name)
 	  "#+filetags: gurps-character"
 	  "#+begin_quote"
-	  "Character description"
+	  "Character description / concept"
 	  "#+end_quote"
 	  "* Attributes"
 	  "| Attribute | Level | Pts | Additional Attributes | Value | Pts |"
