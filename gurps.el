@@ -27,6 +27,27 @@
 	  (insert result)
 	(message result)))))
 
+(defun gurps-calculate-relative-skill-level (type points)
+  "Calculate the relative skill level based on TYPE and POINTS.
+See B170 for details."
+  (let ((buy-skills-table '(("E" . 0)
+			    ("A" . -1)
+			    ("H" . -2)
+			    ("VH" . -3)))
+	(point-rate '((1 . 0)
+		      (2 . 1)
+		      (3 . 1)
+		      (4 . 2)))
+	(attribute-difficulty (string-split type "/")))
+    (if (eq points 0)
+	"*"
+      (let ((rsl (if (< points 5)
+		     (+ (cdr (assoc points point-rate)) (cdr (assoc (car (cdr attribute-difficulty)) buy-skills-table)))
+		   (+ (/ (- points 4) 4) 2 (cdr (assoc (car (cdr attribute-difficulty)) buy-skills-table))))))
+	(format "%s%s%d" (car attribute-difficulty) (if (< rsl 0) "" "+") rsl))
+      )))
+
+
 (defun gurps-character-sheet (name)
   "Insert a template character with NAME in an org format."
   (interactive "sName: ")
