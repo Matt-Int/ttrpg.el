@@ -467,14 +467,13 @@ Use a prefix argument to skip the confirmation."
 					      (car (split-string table "[\.]"))
 					      result))
 				  tables results))
-      (while continue
+      (while continue (y-or-n-p "Roll next? ")
 	(progn (insert (car (split-string (car tables) "[\.]")))
 	       (insert ": ")
 	       (insert (car results))
 	       (setq results (cdr results))
 	       (setq tables (cdr tables))
-	       (if (eq results nil) (setq continue nil)
-		 (setq continue (y-or-n-p "Roll next? ")))
+	       (unless results (setq continue nil))
 	       (insert "\n"))))))
   ;;(mythic--elements "character-descriptors.txt")))
 
