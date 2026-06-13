@@ -18,16 +18,29 @@
 (defgroup gurps nil "Customize options for the ttrpg GURPS module."
   :group 'ttrpg)
 
+(defcustom gurps-insert-format 'default
+  "Option to determine whether to use the default or lonelog format when inserting.
+Can be a symbol of either 'lonelog or 'default"
+  :group 'gurps
+  :type '(choice (const :tag "Lonelog" lonelog) (const :tag "Default" default)))
+
 (defun gurps-skill-roll (skill target modifiers)
   "Roll a 3d against a SKILL TARGET with any MODIFIERS."
   (interactive "sSkill: \nnSL: \nnModifiers: ")
-  (let ((dice-roll (roll-dice-total 3 6)))
-    (let ((result (format "%s-%d + %d = %d [%d] {%d}"
-			  skill target modifiers (+ modifiers target) dice-roll
-			  (- (+ target modifiers) dice-roll))))
-      (if current-prefix-arg
-	  (insert result)
-	(message result)))))
+  (let* ((dice-roll (roll-dice-total 3 6))
+	 (result-default (format "%s-%d + %d = %d [%d] {%d}"
+				 skill target modifiers (+ modifiers target) dice-roll
+				 (- (+ target modifiers) dice-roll)))
+	 (result-lonelog (format "d: %d vs TN %d (%s-%d + %d) -> %s by %d"
+				 dice-roll (+ modifiers target) skill target modifiers
+				 (if (<= 0 (- (+ target modifiers) dice-roll))
+				     "Made it" "Missed")
+				 (- (+ target modifiers) dice-roll)))
+	 (result (if (eq 'lonelog gurps-insert-format) result-lonelog result-default)))
+    (if current-prefix-arg
+	(insert result)
+      (message result))
+    result))
 
 (defcustom gurps-reaction-results '(((-100 .   0)   . "Disastrous")
 				    ((1    .   3)   .   "Very Bad")
