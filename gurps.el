@@ -27,6 +27,47 @@
 	  (insert result)
 	(message result)))))
 
+(defgroup gurps nil "Customize options for the ttrpg GURPS module."
+  :group 'ttrpg)
+
+(defcustom gurps-reaction-results '(((-100 .   0)   . "Disastrous")
+				    ((1    .   3)   .   "Very Bad")
+				    ((4    .   6)   .        "Bad")
+				    ((7    .   9)   .       "Poor")
+				    ((10   .  12)   .    "Neutral")
+				    ((13   .  15)   .       "Good")
+				    ((16   .  18)   .  "Very Good")
+				    ((19   . 100)   .  "Excellent"))
+  "Results table for a 3d6 + reaction modifiers.  See B560-561 for details.
+Values is a list of cons cells, the first cons cell's CAR is another cons
+cell with the minimum and maximum values for the roll to match,
+note that results are inclusive.
+The CDR of the first cons cell is the description of the result."
+  :group 'gurps
+  :tag "Reaction Table"
+  :type '(repeat (cons :tag "Reaction Entry" (cons :tag "Dice" (integer :tag "min")
+			     (integer :tag "max"))
+		       (string :tag "Result Description"))))
+
+(defun gurps-reaction-roll (&rest reaction-modifiers)
+  "Apply provided REACTION-MODIFIERS to 3d6 Reaction roll.
+Use `gurps-reaction-results' for evaluating the result of the reaction roll.
+Call with prefix to insert result instead of printing to the message buffer."
+  (interactive "nReaction Modifier: ")
+  (let* ((modifier (seq-reduce #'+ reaction-modifiers 0))
+	 (modifier (or modifier 0))
+	 (dice (roll-dice-total 3 6))
+	 (result (+ dice modifier))
+	 (reaction (cdr (car (seq-filter #'(lambda (entry)
+					     (between-p result
+							(car (car entry))
+							(cdr (car entry))))
+					 gurps-reaction-results))))
+	 (outcome (format "REACTION: [%d] + %d = %d -> %s" dice modifier result reaction)))
+    (if current-prefix-arg
+	(insert outcome)
+      (message outcome))))
+
 (defun gurps-calculate-relative-skill-level (type points)
   "Calculate the relative skill level based on TYPE and POINTS.
 See B170 for details."
