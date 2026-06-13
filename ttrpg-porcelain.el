@@ -45,39 +45,26 @@
    ])
 
 (transient-define-prefix ttrpg-mythic ()
-  "Mythic Game Master Emulator 2nd Edition."
-  ["Mythic Information"
-   ("" (lambda () (format "Chaos Factor: %s" mythic-chaos-factor)) (lambda () (interactive) (mythic-log mythic-chaos-factor)))
-   ("l" "View the Mythic GME Log" (lambda () (interactive) (display-buffer "*Mythic GME Log*")))
-   ("f" "Fate Check" fate-check)]
-  [["Adventure"
-    ("" (lambda () (format "'%s'" mythic-adventure-current))
-     (lambda () (interactive) (mythic-log mythic-adventure-current)))
-   ("a n" "New adventure" mythic-adventure-new)
-   ("a c" "Choose adventure" mythic-adventure-pick)
-   ("a L" "Open adventure log" (lambda () (interactive) (find-file (format "%s/%s/adventure.log"
-								      mythic-adventure-directory
-								      mythic-adventure-current))))]
-   ["Lists"
-    ("a l n" "NPCs List" (lambda () (interactive) (mythic-adventure-list--get "npcs")))
-    ("a l t" "Threads List" (lambda () (interactive) (mythic-adventure-list--get "threads")))
-    ("a l O" "Open List" mythic-adventure-list-open)]
-  ["Scenes"
-   ("s n" "New Scene" (lambda () (interactive) (message "Create a new scene")))
-   ("s t" "Test Scene" mythic-scene-test)
-   ("s f" "Scene Focus" mythic-event-focus)
-   ("s e" "End Scene" mythic-scene-end)]]
-  ["NPCs"
-   ("n s" "Statistics Check" mythic-statistic-check)]
-  ["Tables"
-   ("t a" "Action Meaning" mythic-action)
-   ("t d" "Description Meaning" mythic-description)
-   ("t e" "Element Meaning" mythic-elements)]
-  ["Chaos Factor"
-  ("c +" "Increase Chaos Factor" chaos-factor-increase :transient t)
-  ("c -" "Decrease Chaos Factor" chaos-factor-decrease :transient t)
-  ("c s" "Set Chaos Factor" (lambda (user-input) (interactive "nChaos Factor: ") (setq mythic-chaos-factor user-input))
-   :transient t)])
+  "Mythic Game Master Emulator 2nd Edition"
+  ["Mythic"
+   ["Questions"
+    ("o q" "Oracle Question" fate-check)]
+   ["Scenes"
+    ("s t" "Test Scene" mythic-scene-test)
+    ("s f" "Scene Focus" mythic-event-focus)
+    ("s e" "End Scene" mythic-scene-end)]
+   ["NPCs"
+    ("n s" "Statistics Check" mythic-statistic-check)
+    ("n c" "Roll on character-* tables" mythic-character-roller)]
+   ["Tables"
+    ("t a" "Action Meaning" mythic-action)
+    ("t d" "Description Meaning" mythic-description)
+    ("t e" "Element Meaning" mythic-elements)]
+   [:description (lambda () (format "Chaos Factor: %s" mythic-chaos-factor))
+    ("c +" "Increase Chaos Factor" chaos-factor-increase :transient t)
+    ("c -" "Decrease Chaos Factor" chaos-factor-decrease :transient t)
+    ("c s" "Set Chaos Factor" (lambda (user-input) (interactive "nChaos Factor: ") (setq mythic-chaos-factor user-input)))
+   ]])
 
 (provide 'ttrpg-porcelain)
 ;;; ttrpg-porcelain.el ends here
