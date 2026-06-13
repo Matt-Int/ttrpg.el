@@ -95,6 +95,36 @@ Call with prefix to insert result instead of printing to the message buffer."
 	(insert description)
       (message description))))
 
+(defcustom gurps-range-modifiers '((2  .  0)
+				   (3  . -1)
+				   (5  . -2)
+				   (7  . -3)
+				   (10 . -4)
+				   (15 . -5)
+				   (20 . -6)
+				   (30 . -7)
+				   (50 . -8)
+				   (70 . -9))
+  "A list of range modifiers in GURPS.
+Values are cons cells where the CAR is the inclusive top range value
+and the CDR is the range penalty.
+See GURPS Lite p28."
+  :group 'gurps
+  :tag "GURPS Range Table"
+  :type '(repeat (cons :tag "Entry" (integer :tag "Top Range (Inclusive)")
+		       (integer :tag "Modifier"))))
+
+(defun gurps-range-modifier (&optional range)
+  "Return the modifier from `gurps-range-modifiers'.
+The first entry that is less than RANGE is returned.
+Call with prefix to insert instead of ouptutting to the message buffer."
+  (interactive "nRange: ")
+  (let ((modifier (cdr (car (seq-filter #'(lambda (entry) (<= range (car entry))) gurps-range-modifiers)))))
+    (if current-prefix-arg
+	(insert (format "%d" modifier))
+      (message (format "%d" modifier)))
+    modifier))
+
 (defun gurps-calculate-relative-skill-level (type points)
   "Calculate the relative skill level based on TYPE and POINTS.
 See B170 for details."
