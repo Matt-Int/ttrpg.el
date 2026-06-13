@@ -1,4 +1,4 @@
-;; ttrpg.el --- Roll dice and use Mythic GM Emulator functionality
+;; gurps.el --- GURPS specific lookups and types of rolls -*- lexical-binding: t -*-
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games
@@ -8,11 +8,10 @@
 
 ;;; Commentary:
 
-;; Provides a set of helper functions for running solo-ttrpg games
+;; Provides a set of helper functions for running GURPS games
+;; See SteveJacksonGames' GURPS 4th Edition and GURPS Lite for details.
 
 ;;; Code:
-
-;; GURPS specific rolls:
 
 (require 'ttrpg)
 
