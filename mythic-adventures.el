@@ -1,4 +1,4 @@
-;; mythic-adventures.el --- Using mythic as a framework for tracking adventures.
+;; mythic-adventures.el --- Using mythic as a framework for tracking adventures. -*- lexical-binding: t -*-
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games

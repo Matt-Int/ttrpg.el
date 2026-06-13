@@ -1,4 +1,4 @@
-;; mythic.el --- Use Mythic GM Emulator functionality
+;; mythic.el --- Use Mythic GM Emulator functionality -*- lexical-binding: t -*-
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games

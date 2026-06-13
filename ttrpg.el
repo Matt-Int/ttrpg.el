@@ -1,4 +1,4 @@
-;; ttrpg.el --- Roll dice and other utility functions for general ttrpg-ing.
+;; ttrpg.el --- Roll dice and other utility functions for general ttrpg-ing. -*- lexical-binding: t -*-
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games

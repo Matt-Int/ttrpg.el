@@ -1,4 +1,4 @@
-;; ttrpg-porcelain.el --- Porcelain to handle ttrpg and module activity
+;; ttrpg-porcelain.el --- Porcelain to handle ttrpg and module activity -*- lexical-binding: t -*-
 ;; Author: Mattias <mattias1126@protonmail.com>
 ;; Maintainer: Mattias <mattias1126@protonmail.com>
 ;; Keywords: ttrpg games
