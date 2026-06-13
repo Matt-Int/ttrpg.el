@@ -91,7 +91,9 @@ Call with prefix to insert result instead of printing to the message buffer."
 							(car (car entry))
 							(cdr (car entry))))
 					 gurps-reaction-results))))
-	 (outcome (format "REACTION: [%d] + %d = %d -> %s" dice modifier result reaction)))
+	 (outcome-default (format "REACTION: [%d] + %d = %d -> %s" dice modifier result reaction))
+	 (outcome-lonelog (format "tbl: Reaction 3d6=%d + %d = %d -> %s" dice modifier (+ dice modifier) reaction))
+	 (outcome (if (eq 'default gurps-insert-format) outcome-default outcome-lonelog)))
     (if current-prefix-arg
 	(insert outcome)
       (message outcome))))
