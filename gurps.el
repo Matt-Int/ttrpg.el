@@ -48,17 +48,17 @@ The CDR of the first cons cell is the description of the result."
 			     (integer :tag "max"))
 		       (string :tag "Result Description"))))
 
-(defcustom gurps-reaction-descriptions '(("Disastrous" . "See B560")
-					 ("Very Bad" . "See B560")
-					 ("Bad" . "See B560")
-					 ("Poor" . "See B560")
-					 ("Neutral" . "See B560")
-					 ("Good" . "See B561")
-					 ("Very Good" . "See B561")
-					 ("Excellent" . "See B561"))
+(defcustom gurps-reaction-descriptions '(("Disastrous" . "The NPC hates the characters and will act in their worst interest...")
+					 ("Very Bad" . "The NPC dislikes the characters and will act against them if it is convenient to do so...")
+					 ("Bad" . "The NPC cares nothing for the characters and will act against them if they can profit from it...")
+					 ("Poor" . "The NPC is unimpressed, may demand a huge bribe before offering aid...")
+					 ("Neutral" . "The NPC ignores the characters as much as possible...")
+					 ("Good" . "The NPC likes the characters and will be helpful within normal, every-day limits...")
+					 ("Very Good" . "The NPC thinks highly of the characters [...] freely offering aid...")
+					 ("Excellent" . "The NPC is extemely impressed by the characters and will act in their best interests at all times..."))
   "Descriptions for entries specified in `gurps-reaction-results'.
 Value is a list of cons cells where the CAR is the reaction result,
-the CDR is the expanded description from B560-561.
+the CDR is the expanded description from B560-561 or GURPS Lite p3.
 Note: by default these values are left as the page references, feel free to update accordingly."
   :group 'gurps
   :tag "Reaction Descriptions"
