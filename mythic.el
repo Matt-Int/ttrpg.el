@@ -407,7 +407,7 @@ mini-buffer."
 (defun mythic-statistic--check (expected)
   "Roll a fate question and modify EXPECTED stats accordingly.
 See p.127 in Mythic 2nd Edition"
-  (let ((answer (chaos-roll mythic-chaos-factor 0))
+  (let ((answer (chaos-roll 5 0))
 	(result))
     (cond
      ((and (string-match-p "Yes" answer)
