@@ -15,6 +15,9 @@
 
 (require 'ttrpg)
 
+(defgroup gurps nil "Customize options for the ttrpg GURPS module."
+  :group 'ttrpg)
+
 (defun gurps-skill-roll (skill target modifiers)
   "Roll a 3d against a SKILL TARGET with any MODIFIERS."
   (interactive "sSkill: \nnSL: \nnModifiers: ")
@@ -25,9 +28,6 @@
       (if current-prefix-arg
 	  (insert result)
 	(message result)))))
-
-(defgroup gurps nil "Customize options for the ttrpg GURPS module."
-  :group 'ttrpg)
 
 (defcustom gurps-reaction-results '(((-100 .   0)   . "Disastrous")
 				    ((1    .   3)   .   "Very Bad")
