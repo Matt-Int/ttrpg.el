@@ -430,15 +430,20 @@ Run with a prefix argument to insert at point instead of echoing to the
 mini-buffer."
   (interactive "sActor: \nsAttribute: \nnExpected: ")
   (mythic-log "----------START STATISTICS CHECK")
-  (let ((result))
-    (setq result
-	  (format "%s's %s is %s"
-		  actor attribute (mythic-statistic--check expected)))
-    (if (equal current-prefix-arg nil)
-	(message result)
-      (insert result))
-    (mythic-log "STATISTICS: %s" result))
-  (mythic-log "----------END STATISTICS CHECK"))
+  (let* ((statistic-value (mythic-statistic--check expected))
+	 (result-default (format "%s's %s is %s"
+				 actor attribute statistic-value))
+	 (result-lonelog (format "gen: Mythic Statistics %s's %s -> %s"
+				 actor attribute statistic-value))
+	 (result (if (eq 'lonelog ttrpg-insert-format)
+		     result-lonelog
+		   result-default)))
+    (if current-prefix-arg
+	(insert result)
+      (message result))
+    (mythic-log "STATISTICS: %s" result)
+  (mythic-log "----------END STATISTICS CHECK")
+  result))
 
 (defun mythic-character-roller ()
   "Interactive function to roll on a number of mythic elements tables.

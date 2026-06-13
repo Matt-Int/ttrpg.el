@@ -20,7 +20,13 @@
   "Running solo-ttrpgs."
   :group 'games)
 
-  
+(defcustom ttrpg-insert-format 'default
+  "Option to determine whether to use the default or lonelog format when inserting.
+Can be a symbol of either \='lonelog or \='default"
+  :group 'ttrpg
+  :type '(choice (const :tag "Lonelog" lonelog) (const :tag "Default" default)))
+
+
 ;; Util functions for rolling dice:
 
 (defun roll-die (n-sides)

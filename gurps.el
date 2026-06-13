@@ -18,12 +18,6 @@
 (defgroup gurps nil "Customize options for the ttrpg GURPS module."
   :group 'ttrpg)
 
-(defcustom gurps-insert-format 'default
-  "Option to determine whether to use the default or lonelog format when inserting.
-Can be a symbol of either 'lonelog or 'default"
-  :group 'gurps
-  :type '(choice (const :tag "Lonelog" lonelog) (const :tag "Default" default)))
-
 (defun gurps-skill-roll (skill target modifiers)
   "Roll a 3d against a SKILL TARGET with any MODIFIERS."
   (interactive "sSkill: \nnSL: \nnModifiers: ")
@@ -36,7 +30,7 @@ Can be a symbol of either 'lonelog or 'default"
 				 (if (<= 0 (- (+ target modifiers) dice-roll))
 				     "Made it" "Missed")
 				 (- (+ target modifiers) dice-roll)))
-	 (result (if (eq 'lonelog gurps-insert-format) result-lonelog result-default)))
+	 (result (if (eq 'lonelog ttrpg-insert-format) result-lonelog result-default)))
     (if current-prefix-arg
 	(insert result)
       (message result))
@@ -93,7 +87,7 @@ Call with prefix to insert result instead of printing to the message buffer."
 					 gurps-reaction-results))))
 	 (outcome-default (format "REACTION: [%d] + %d = %d -> %s" dice modifier result reaction))
 	 (outcome-lonelog (format "tbl: Reaction 3d6=%d + %d = %d -> %s" dice modifier (+ dice modifier) reaction))
-	 (outcome (if (eq 'default gurps-insert-format) outcome-default outcome-lonelog)))
+	 (outcome (if (eq 'default ttrpg-insert-format) outcome-default outcome-lonelog)))
     (if current-prefix-arg
 	(insert outcome)
       (message outcome))))
